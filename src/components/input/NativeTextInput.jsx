@@ -1,0 +1,52 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { SafeAreaView, Text, TextInput, View } from "react-native";
+
+const inputTypeMap = {
+  email: "email-address",
+  integer: "number-pad",
+  decimal: "decimal-pad",
+  mobile: "phone-pad",
+};
+
+const NativeTextInput = (props) => {
+
+  function onChangeHandler(newVal) {
+    props.onChange(props.name, newVal); 
+  }
+
+  return (
+    <View className={`flex flex-col ${props.clazzName}`}>
+      <Text className="text-sky-800 font-bold uppercase">{props.label}</Text>
+      <TextInput
+        className="border border-gray-400 rounded-lg px-1 py-2 focus:border-gray-400 focus:bg-gray-200 text-base"
+        onChangeText={onChangeHandler}
+        value={props.value}
+        keyboardType={inputTypeMap[props.inputType]}
+      />
+    </View>
+  );
+};
+
+NativeTextInput.propTypes = {
+  name: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.string,
+  inputType: PropTypes.string,
+  onChange: PropTypes.func,
+  clazzName:PropTypes.string
+};
+
+export default NativeTextInput;
+
+{
+  /* <label htmlFor={props.name} className="flex flex-col w-full">
+<span className="block text-sm font-medium text-slate-700">{props.label}</span>
+<input className="mt-1 block w-full px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+invalid:border-red-500 invalid:text-red-600
+focus:invalid:border-red-500 focus:invalid:ring-red-500"
+    type="text" id={props.name} name={props.name} value={props.value} onChange={props.onChange} />
+</label> */
+}
