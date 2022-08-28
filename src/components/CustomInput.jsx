@@ -2,7 +2,7 @@ import React from "react";
 import NativeTextInput from "./input/NativeTextInput";
 import NativeTextPassword from "./input/NativeTextPassword";
 
-const CustomInput = ({ field, value, handleChange, dropdowns, clazzName }) => {
+const CustomInput = ({ field, value, handleChange, dropdowns, clazzName, errorMsg }) => {
   switch (field.type) {
     case "text":
       return (
@@ -13,6 +13,8 @@ const CustomInput = ({ field, value, handleChange, dropdowns, clazzName }) => {
           value={value}
           inputType={field.inputType}
           clazzName={clazzName}
+          description={field.description}
+          errorMsg={errorMsg}
         />
       );
     case "password":
@@ -23,6 +25,7 @@ const CustomInput = ({ field, value, handleChange, dropdowns, clazzName }) => {
           onChange={handleChange}
           value={value}
           clazzName={clazzName}
+          errorMsg={errorMsg}
         />
       );
     // case "date":

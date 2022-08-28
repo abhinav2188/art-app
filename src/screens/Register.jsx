@@ -20,13 +20,19 @@ const formFields = [
     label: "Password",
     type: "password",
   },
+  {
+    name: "confirmPassword",
+    label: "Confirm Password",
+    type: "password",
+  },
 ];
 
 export default function Register({toggleLogin}) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    mobile:""
+    mobile:"",
+    confirmPassword:""
   });
 
   const [loading, setLoading] = useState(false);
@@ -40,6 +46,14 @@ export default function Register({toggleLogin}) {
     }, 2000);
   };
 
+  const validateFormData = () => {
+    let errors = [];
+    if(formData.confirmPassword !== formData.password){
+        errors.push("confirm password should be same as password")
+    }
+    return errors.length > 0 ? errors : null;
+  }
+
   return (
     <View>
       <Form
@@ -49,6 +63,7 @@ export default function Register({toggleLogin}) {
         onSubmit={handleSubmit}
         loading={loading}
         title="Register New User"
+        validateFormData={validateFormData}
       />
       <View className="flex p-4">
       <TouchableOpacity onPress={toggleLogin} className="border border-sky-500 py-4 items-center rounded-lg">
