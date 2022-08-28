@@ -20,13 +20,14 @@ const CustomInput = ({ field, value, handleChange, dropdowns, clazzName, errorMs
     case "password":
       return (
         <NativeTextPassword
-          label={field.label}
-          name={field.name}
-          onChange={handleChange}
-          value={value}
-          clazzName={clazzName}
-          errorMsg={errorMsg}
-        />
+        label={field.label}
+        name={field.name}
+        onChange={handleChange}
+        value={value}
+        clazzName={clazzName}
+        description={field.description}
+        errorMsg={errorMsg}
+      />
       );
     // case "date":
     //     return (

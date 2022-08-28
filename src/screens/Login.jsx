@@ -5,11 +5,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { alertMsgs } from "../alertMsgs";
 import Form from "../components/Form";
-import {
-  passwordValidation,
-  primaryEmailValidation,
-} from "../inputValidations";
+import { primaryEmailValidation, requiredValidation } from "../inputValidations";
+
 
 const formFields = [
   {
@@ -24,9 +23,12 @@ const formFields = [
     name: "password",
     label: "Password",
     type: "password",
-    validateFunc: passwordValidation,
+    description: "enter your password!",
+    validateFunc: requiredValidation,
   },
 ];
+
+
 
 export default function Login({ toggleRegister }) {
   const [errors, setErrors] = useState({
@@ -39,23 +41,14 @@ export default function Login({ toggleRegister }) {
     password: "",
   });
 
-  const isFormDataValid = () => {
-    return true;
-  };
-
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
     setLoading(true);
-    if (isFormDataValid()) {
       setTimeout(() => {
         setLoading(false);
-        console.log(formData);
         alert(JSON.stringify(formData));
       }, 2000);
-    } else {
-      Alert.alert(JSON.stringify(errors));
-    }
   };
 
   return (
@@ -69,6 +62,7 @@ export default function Login({ toggleRegister }) {
         title="Login User"
         errors={errors}
         setErrors={setErrors}
+        buttonTitle="Login"
       />
       <View className="flex p-4">
         <TouchableOpacity

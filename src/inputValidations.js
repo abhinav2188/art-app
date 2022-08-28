@@ -1,9 +1,4 @@
-const alertMsgs = {
-  invalidEmail: "Not a valid email format!",
-  requiredField: "Required field!",
-  invalidPassword:
-    "7 to 15 characters containing at least one numeric digit and a special character!",
-};
+import { alertMsgs } from "./alertMsgs";
 
 export const isEmailValid = (inputText) => {
   var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -16,21 +11,55 @@ export const isPresent = (inputText) => {
 
 export const isPasswordValid = (inputText) => {
   var paswd = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
-  return inputtxt.value.match(passw);
+  return inputText.match(paswd);
+};
+
+export const isMobileValid = (inputText) => {
+  var phoneno = /^\d{10}$/;
+  return inputText.match(phoneno);
 };
 
 export const primaryEmailValidation = (fieldName, value, setError) => {
   if (!isPresent(value)) {
     setError(fieldName, alertMsgs.requiredField);
-    return;
+    return alertMsgs.requiredField;
   } else if (!isEmailValid(value)) {
     setError(fieldName, alertMsgs.invalidEmail);
+    return alertMsgs.invalidEmail;
+  } else {
+    setError(fieldName, "");
   }
 };
 
 export const passwordValidation = (fieldName, value, setError) => {
-  if (!isPasswordValid(value)) {
+  if (!isPresent(value)) {
+    setError(fieldName, alertMsgs.requiredField);
+    return alertMsgs.requiredField;
+  } else if (!isPasswordValid(value)) {
     setError(fieldName, alertMsgs.invalidPassword);
-    return;
+    return alertMsgs.invalidPassword;
+  } else {
+    setError(fieldName, "");
+  }
+};
+
+export const requiredValidation = (fieldName, value, setError) => {
+  if (!isPresent(value)) {
+    setError(fieldName, alertMsgs.requiredField);
+    return alertMsgs.requiredField;
+  } else {
+    setError(fieldName, "");
+  }
+};
+
+export const mobileValidation = (fieldName, value, setError) => {
+  if (!isPresent(value)) {
+    setError(fieldName, alertMsgs.requiredField);
+    return alertMsgs.requiredField;
+  } else if (!isMobileValid(value)) {
+    setError(fieldName, alertMsgs.invalidMobile);
+    return alertMsgs.invalidMobile;
+  } else {
+    setError(fieldName, "");
   }
 };

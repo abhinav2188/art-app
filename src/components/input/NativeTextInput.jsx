@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {
   Text,
@@ -18,10 +18,6 @@ const inputTypeMap = {
 };
 
 const NativeTextInput = (props) => {
-
-  useEffect(()=>{
-    props.onChange(props.name,props.val);
-  },[])
 
   function onChangeHandler(newVal) {
     props.onChange(props.name, newVal); 

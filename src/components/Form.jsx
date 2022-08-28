@@ -5,19 +5,20 @@ import SubmitButton from "./button/SubmitButton";
 import CustomInput from "./CustomInput";
 
 const Form = ({
-  clazzName,
   fields,
-  setFormData,
-  onSubmit,
   formData,
-  loading,
-  dropdowns,
-  multipart,
-  title,
-  reloadDropdown,
-  validateFormData,
+  setFormData,
   errors,
   setErrors,
+  otherFormValidations,
+  onSubmit,
+  loading,
+  dropdowns,
+  reloadDropdown,
+  title,
+  buttonTitle,
+  multipart,
+  clazzName,
 }) => {
 
   const setError = (name, errorMsg) => {
@@ -37,23 +38,36 @@ const Form = ({
     // validate field data
     let formField = fields
     .filter((field) => field.name === name)[0];
-    console.log(formField);
-    console.log(formField[name]);
     formField.validateFunc(name, newVal, setError);
   }
 
   function handleSubmit() {
+    const errors = [];
     // check if each form field has no errors
-    const errorMsg = "";
-    for(const field in formData){
-        if(!!errors[field]) errorMsg.concat(errors[field]+", ")
-    }
+    fields.map(field => {
+      const err = field.validateFunc(field.name, formData[field.name], setError);
+      console.log(err);
+      if(!!err){
+        const msg = field.label + " : " + err + "\n";
+        errors.push(msg);
+      }
+    });
+    let errorMsg = errors.join("");
     if(!!errorMsg){
       Alert.alert("invalid form data", errorMsg);
       return;
     }
+    if(!!otherFormValidations){
+      // additional form validations requiring more than one fields
+      errorMsg = otherFormValidations();
+      if(!!errorMsg) {
+        Alert.alert("invalid form data", errorMsg);
+        return;
+      }
+    }
     // onSubmit 
     onSubmit();
+    
   }
 
   return (
@@ -79,7 +93,7 @@ const Form = ({
           />
         ))}
         <SubmitButton clazzName="mt-4" onClick={handleSubmit} loading={loading}>
-          Submit
+          {!!buttonTitle ? buttonTitle : "Submit"}
         </SubmitButton>
       </View>
     </View>

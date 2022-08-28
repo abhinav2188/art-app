@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { Text, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
 import Form from "../components/Form";
+import { mobileValidation, passwordValidation, primaryEmailValidation, requiredValidation } from "../inputValidations";
+
+const initialState = {
+  email: "",
+  password: "",
+  mobile:"",
+  confirmPassword:""
+};
 
 const formFields = [
   {
@@ -8,34 +16,48 @@ const formFields = [
     label: "Email",
     type: "text",
     inputType: "email",
+    description: "enter your email address!",
+    validateFunc: primaryEmailValidation,
   },
   {
     name: "mobile",
     label: "Mobile",
     type: "text",
-    inputType: "mobile"
+    inputType: "mobile",
+    description: "enter your mobile!",
+    validateFunc: mobileValidation,
+
   },
   {
     name: "password",
     label: "Password",
     type: "password",
+    description: "enter your password!",
+    validateFunc: passwordValidation,
   },
   {
     name: "confirmPassword",
     label: "Confirm Password",
     type: "password",
+    description: "Confirm password, should be same as Password!",
+    validateFunc: requiredValidation
   },
 ];
 
 export default function Register({toggleLogin}) {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    mobile:"",
-    confirmPassword:""
-  });
+  const [formData, setFormData] = useState(initialState);
+  const [errors, setErrors] = useState(initialState);
 
   const [loading, setLoading] = useState(false);
+
+
+  const otherFormValidations = () => {
+    let errors = [];
+    if(formData.confirmPassword !== formData.password){
+        errors.push("confirm password should be same as password")
+    }
+    return errors.length > 0 ? errors.join(",") : null;
+  }
 
   const handleSubmit = () => {
     setLoading(true);
@@ -46,14 +68,6 @@ export default function Register({toggleLogin}) {
     }, 2000);
   };
 
-  const validateFormData = () => {
-    let errors = [];
-    if(formData.confirmPassword !== formData.password){
-        errors.push("confirm password should be same as password")
-    }
-    return errors.length > 0 ? errors : null;
-  }
-
   return (
     <View>
       <Form
@@ -63,7 +77,10 @@ export default function Register({toggleLogin}) {
         onSubmit={handleSubmit}
         loading={loading}
         title="Register New User"
-        validateFormData={validateFormData}
+        errors={errors}
+        setErrors={setErrors}
+        otherFormValidations={otherFormValidations}
+        buttonTitle="Register"
       />
       <View className="flex p-4">
       <TouchableOpacity onPress={toggleLogin} className="border border-sky-500 py-4 items-center rounded-lg">
