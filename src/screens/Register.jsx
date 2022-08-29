@@ -1,13 +1,26 @@
 import React, { useState } from "react";
-import { Alert, Text, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Text,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Form from "../components/Form";
-import { mobileValidation, passwordValidation, primaryEmailValidation, requiredValidation } from "../inputValidations";
+import {
+  mobileValidation,
+  passwordValidation,
+  primaryEmailValidation,
+  requiredValidation,
+} from "../inputValidations";
+import { registerUser } from "../services/authService";
 
 const initialState = {
   email: "",
   password: "",
-  mobile:"",
-  confirmPassword:""
+  mobile: "",
+  confirmPassword: "",
 };
 
 const formFields = [
@@ -26,7 +39,6 @@ const formFields = [
     inputType: "mobile",
     description: "enter your mobile!",
     validateFunc: mobileValidation,
-
   },
   {
     name: "password",
@@ -40,32 +52,33 @@ const formFields = [
     label: "Confirm Password",
     type: "password",
     description: "Confirm password, should be same as Password!",
-    validateFunc: requiredValidation
+    validateFunc: requiredValidation,
   },
 ];
 
-export default function Register({toggleLogin}) {
+export default function Register({ toggleLogin }) {
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState(initialState);
-
   const [loading, setLoading] = useState(false);
-
 
   const otherFormValidations = () => {
     let errors = [];
-    if(formData.confirmPassword !== formData.password){
-        errors.push("confirm password should be same as password")
+    if (formData.confirmPassword !== formData.password) {
+      errors.push("confirm password should be same as password");
     }
     return errors.length > 0 ? errors.join(",") : null;
-  }
+  };
 
   const handleSubmit = () => {
     setLoading(true);
-    setTimeout(() => {
+    registerUser(formData).then((isSuccess) => {
+      console.log(isSuccess);
       setLoading(false);
-      console.log(formData);
-      alert(new String(formData));
-    }, 2000);
+      if (isSuccess) {
+        alert("login again with the credentials");
+        setFormData(initialState);
+      }
+    });
   };
 
   return (
@@ -83,9 +96,12 @@ export default function Register({toggleLogin}) {
         buttonTitle="Register"
       />
       <View className="flex p-4">
-      <TouchableOpacity onPress={toggleLogin} className="border border-sky-500 py-4 items-center rounded-lg">
-        <Text className="font-bold text-sky-500">Existing User? Login</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={toggleLogin}
+          className="border border-sky-500 py-4 items-center rounded-lg"
+        >
+          <Text className="font-bold text-sky-500">Existing User? Login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

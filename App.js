@@ -1,15 +1,29 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import MyAppsProviders from "./src/MyAppProviders";
-import Home from "./src/screens/Home";
-import Login from "./src/screens/Login";
+import LogScreen from "./src/screens/LogScreen";
+import HomeNavigator from "./src/screens/HomeNaivgator";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <MyAppsProviders>
-      <View className="flex-1">
+      <View className="flex-1 pt-10">
         <StatusBar style="auto" />
-        <Home />
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName="home"
+          > 
+            <Stack.Screen name="home" component={HomeNavigator} />
+            <Stack.Screen name="login" component={LogScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </View>
     </MyAppsProviders>
   );

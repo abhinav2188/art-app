@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Alert,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { alertMsgs } from "../alertMsgs";
 import Form from "../components/Form";
+import UserContext from "../context/UserContext";
 import { primaryEmailValidation, requiredValidation } from "../inputValidations";
+import { localStorage } from "../localStorage";
+import { loginUser } from "../services/authService";
 
 
 const formFields = [
@@ -31,6 +33,9 @@ const formFields = [
 
 
 export default function Login({ toggleRegister }) {
+
+  const userContext = useContext(UserContext);
+
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -45,13 +50,27 @@ export default function Login({ toggleRegister }) {
 
   const handleSubmit = () => {
     setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        alert(JSON.stringify(formData));
-      }, 2000);
+    loginUser(formData)
+        .then((response) => {
+            console.log(response);
+            setLoading(false);
+            if (!!response.data) {
+                userContext.setUser(response.data);
+                localStorage.storeData("userDetails",response.data);
+                setFormData({
+                    email: "",
+                    password: ""
+                });
+            }
+        });
   };
 
-  return (
+  function submitLoginForm(event) {
+    event.preventDefault();
+}
+
+
+return (
     <View>
       <Form
         fields={formFields}
