@@ -36,9 +36,9 @@ const Form = ({
       [name]: newVal,
     }));
     // validate field data
-    let formField = fields
-    .filter((field) => field.name === name)[0];
-    formField.validateFunc(name, newVal, setError);
+    let formField = fields.filter((field) => field.name === name)[0];
+    if(!!formData.validateFunc)
+      formField.validateFunc(name, newVal, setError);
   }
 
   function handleSubmit() {
