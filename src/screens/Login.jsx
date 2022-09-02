@@ -1,16 +1,13 @@
 import React, { useContext, useState } from "react";
-import {
-  Alert,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import Form from "../components/Form";
 import UserContext from "../context/UserContext";
-import { primaryEmailValidation, requiredValidation } from "../inputValidations";
+import {
+  primaryEmailValidation,
+  requiredValidation,
+} from "../inputValidations";
 import { localStorage } from "../localStorage";
 import { loginUser } from "../services/authService";
-
 
 const formFields = [
   {
@@ -30,10 +27,7 @@ const formFields = [
   },
 ];
 
-
-
 export default function Login({ toggleRegister }) {
-
   const userContext = useContext(UserContext);
 
   const [errors, setErrors] = useState({
@@ -50,40 +44,34 @@ export default function Login({ toggleRegister }) {
 
   const handleSubmit = () => {
     setLoading(true);
-    loginUser(formData)
-        .then((response) => {
-            console.log(response);
-            setLoading(false);
-            if (!!response.data) {
-                userContext.setUser(response.data);
-                localStorage.storeData("userDetails",response.data);
-                setFormData({
-                    email: "",
-                    password: ""
-                });
-            }
+    loginUser(formData).then((response) => {
+      console.log(response);
+      setLoading(false);
+      if (!!response.data) {
+        userContext.setUser(response.data);
+        localStorage.storeData("userDetails", response.data);
+        setFormData({
+          email: "",
+          password: "",
         });
+      }
+    });
   };
 
-  function submitLoginForm(event) {
-    event.preventDefault();
-}
-
-
-return (
-    <View>
+  return (
+    <View className="flex">
       <Form
-        fields={formFields}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleSubmit}
-        loading={loading}
-        title="Login User"
-        errors={errors}
-        setErrors={setErrors}
-        buttonTitle="Login"
+          fields={formFields}
+          formData={formData}
+          setFormData={setFormData}
+          errors={errors}
+          setErrors={setErrors}
+          onSubmit={handleSubmit}
+          loading={loading}
+          title="Login User"
+          buttonTitle="Login"
       />
-      <View className="flex p-4">
+      <View className="px-4 py-12">
         <TouchableOpacity
           onPress={toggleRegister}
           className="border border-sky-500 py-4 items-center rounded-lg"

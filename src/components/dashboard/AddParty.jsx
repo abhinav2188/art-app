@@ -1,6 +1,6 @@
-import React from "react";
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { emailValidation, mobileValidation, primaryEmailValidation, requiredValidation } from "../../inputValidations";
 import { getDropdownValues } from "../../services/dropdownService";
 import { postParty } from "../../services/partyService";
 import Form from "../Form";
@@ -9,28 +9,33 @@ const formFields = [
     {
         name: "partyName",
         label: "Party Name",
-        type: "text"
+        type: "text",
+        validateFunc: requiredValidation
     },
     {
         name: "address",
         label: "Address",
-        type: "text"
+        type: "text",
     },
     {
         name: "authority",
         label: "Authority",
         type: "dropdown",
-        dropdownType: "AUTHORITY_TYPE"
+        dropdownType: "AUTHORITY_TYPE",
+        description: "Any Govt or private Authority to which Party belongs",
+        validateFunc: requiredValidation
     },
     {
         name: "email",
         label: "Email",
-        type: "text"
+        type: "text",
+        validateFunc: emailValidation,
     },
     {
         name: "mobile",
         label: "Mobile",
-        type: "text"
+        type: "text",
+        validateFunc: mobileValidation,
     }
 ]
 
@@ -50,6 +55,7 @@ const AddParty = ({ navigation }) => {
             values: []
         }
     });
+    const [errors, setErrors] = useState(initialData);
 
     const [flag, setFlag] = useState(true);
 
@@ -72,7 +78,7 @@ const AddParty = ({ navigation }) => {
         postParty(formData).then(response => {
             console.log(response);
             if (!!response) {
-                addPartyToView(response.data);
+                console.log(response.data);
             }
             setLoading(false);
             setFormData(initialData);
@@ -80,16 +86,19 @@ const AddParty = ({ navigation }) => {
     }
 
     return (
-        <View className="py-8">
+        <View className="flex py-8 px-4">
             <Form
                 title="ADD New Party"
                 fields={formFields}
                 formData={formData}
                 setFormData={setFormData}
-                dropdowns={dropdowns}
+                errors={errors}
+                setErrors={setErrors}
                 onSubmit={handleSubmit}
                 loading={loading}
+                dropdowns={dropdowns}
                 reloadDropdown={reloadDropdown}
+                className="border border-gray-400"
             />
         </View>
     );

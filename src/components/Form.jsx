@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert, Text, View } from "react-native";
+import { Star } from "../svgIcons";
 import ActionButton from "./button/ActionButton";
 import SubmitButton from "./button/SubmitButton";
 import CustomInput from "./CustomInput";
+import FormTitle from "./FormTitle";
 
 const Form = ({
   fields,
@@ -19,84 +21,106 @@ const Form = ({
   buttonTitle,
   multipart,
   clazzName,
+  style,
 }) => {
+  useEffect(() => {
+    console.log("form loaded");
+  }, []);
 
+  // function to set field error
   const setError = (name, errorMsg) => {
-    // set field error
     setErrors((prevData) => ({
       ...prevData,
       [name]: errorMsg,
     }));
   };
 
+  // function to handle input change and call validate function
   function handleChange(name, newVal) {
-    // set field data
     setFormData((prevData) => ({
       ...prevData,
       [name]: newVal,
     }));
     // validate field data
     let formField = fields.filter((field) => field.name === name)[0];
-    if(!!formData.validateFunc)
+    if (!!formField.validateFunc) {
       formField.validateFunc(name, newVal, setError);
+    }
   }
 
+  // function to handle form submit
   function handleSubmit() {
+    // form data validationss
     const errors = [];
     // check if each form field has no errors
-    fields.map(field => {
-      const err = field.validateFunc(field.name, formData[field.name], setError);
+    fields.map((field) => {
+      if(!!!field.validateFunc) return;
+      const err = field.validateFunc(
+        field.name,
+        formData[field.name],
+        setError
+      );
       console.log(err);
-      if(!!err){
+      if (!!err) {
         const msg = field.label + " : " + err + "\n";
         errors.push(msg);
       }
     });
     let errorMsg = errors.join("");
-    if(!!errorMsg){
+    if (!!errorMsg) {
       Alert.alert("invalid form data", errorMsg);
       return;
     }
-    if(!!otherFormValidations){
-      // additional form validations requiring more than one fields
+    // additional form validations requiring more than one fields
+    if (!!otherFormValidations) {
       errorMsg = otherFormValidations();
-      if(!!errorMsg) {
+      if (!!errorMsg) {
         Alert.alert("invalid form data", errorMsg);
         return;
       }
     }
-    // onSubmit 
+    // onSubmit
     onSubmit();
-    
   }
 
   return (
-    <View className="flex flex-col w-full rounded-xl p-4">
-      <View className="flex mb-3 border-b border-gray-400">
-        <Text className="text-lg font-bold text-gray-800 uppercase">
-          {title}
-        </Text>
-        {!!reloadDropdown && (
-          <ActionButton type="reload" onClick={reloadDropdown} />
-        )}
-      </View>
-      <View className={`flex flex-col ${clazzName}`}>
+
+    <View className="rounded-xl flex flex-col gap-y-4" style={style}>
+
+      <FormTitle Icon={Star}>
+        <View className="flex flex-row items-center gap-x-2">
+          <Text className="text-lg font-bold text-white uppercase">
+            {title}
+          </Text>
+          <View>
+            {!!reloadDropdown && (
+              <ActionButton type="reload" onClick={reloadDropdown} />
+            )}
+          </View>
+        </View>
+      </FormTitle>
+
+      <View className={`flex flex-col gap-y-4 px-4`}>
         {fields.map((field) => (
           <CustomInput
             key={field.name}
             field={field}
-            value={formData[field.name]}
             handleChange={handleChange}
-            dropdowns={dropdowns}
-            clazzName="py-2"
+            value={formData[field.name]}
             errorMsg={errors[field.name]}
+            dropdowns={dropdowns}
           />
         ))}
-        <SubmitButton clazzName="mt-4" onClick={handleSubmit} loading={loading}>
+      </View>
+
+      <View className="px-4">
+        <SubmitButton onClick={handleSubmit} loading={loading}>
           {!!buttonTitle ? buttonTitle : "Submit"}
         </SubmitButton>
       </View>
+
     </View>
+
   );
 };
 

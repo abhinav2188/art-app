@@ -1,67 +1,87 @@
 import React from "react";
 import NativeTextInput from "./input/NativeTextInput";
 import NativeTextPassword from "./input/NativeTextPassword";
+import SelectInput from "./input/SelectInput";
 
-const CustomInput = ({ field, value, handleChange, dropdowns, clazzName, errorMsg }) => {
+const CustomInput = ({
+  field,
+  value,
+  errorMsg,
+  dropdowns,
+  handleChange,
+  clazzName,
+  style,
+}) => {
   switch (field.type) {
     case "text":
       return (
         <NativeTextInput
-          label={field.label}
           name={field.name}
-          onChange={handleChange}
-          value={value}
-          inputType={field.inputType}
-          clazzName={clazzName}
+          label={field.label}
           description={field.description}
+          inputType={field.inputType}
+          value={value}
           errorMsg={errorMsg}
+          onChange={handleChange}
+          clazzName={clazzName}
+          style={style}
         />
       );
     case "password":
       return (
         <NativeTextPassword
-        label={field.label}
-        name={field.name}
-        onChange={handleChange}
-        value={value}
-        clazzName={clazzName}
-        description={field.description}
-        errorMsg={errorMsg}
-      />
+          name={field.name}
+          label={field.label}
+          description={field.description}
+          value={value}
+          errorMsg={errorMsg}
+          onChange={handleChange}
+          clazzName={clazzName}
+          style={style}
+        />
       );
-    // case "date":
-    //     return (
-    //         <DateInput label={field.label} name={field.name} onChange={handleChange} value={value} />
-    //     );
-    // case "dropdown2":
-    //     return (
-    //         <SelectInput label={field.label} name={field.name} onChange={handleChange}
-    //             optionsList={dropdowns[field.dropdownType].values}
-    //             value={value} />
-    //     );
-    // case "dropdown":
-    //     return (
-    //         <SelectInput2 label={field.label} name={field.name} onChange={handleChange2}
-    //             optionsList={dropdowns[field.dropdownType].values}
-    //             value={value} multiple={field.multiple} />
-    //     );
-    // case "boolean":
-    //     return (
-    //         <BoolSelectInput label={field.label} name={field.name} onChange={handleChange} value={value} />
-    //     );
-    // case "textArea":
-    //     return (
-    //         <TextAreaInput label={field.label} name={field.name} onChange={handleChange} value={value} />
-    //     );
-    // case "number":
-    //     return (
-    //         <NumberInput label={field.label} name={field.name} onChange={handleChange} value={value} />
-    //     );
-    // case "file":
-    //     return (
-    //         <FileInput label={field.label} name={field.name} onChange={handleChange2} accept={field.accept} />
-    //     );
+    case "dropdown":
+      return (
+        <SelectInput
+          name={field.name}
+          label={field.label}
+          description={field.description}
+          optionsList={dropdowns[field.dropdownType].values}
+          value={value}
+          errorMsg={errorMsg}
+          onChange={handleChange}
+          clazzName={clazzName}
+          style={style}
+        />
+      );
   }
 };
 
 export default CustomInput;
+
+// case "date":
+//     return (
+//         <DateInput label={field.label} name={field.name} onChange={handleChange} value={value} />
+//     );
+// case "dropdown2":
+//     return (
+//         <SelectInput label={field.label} name={field.name} onChange={handleChange}
+//             optionsList={dropdowns[field.dropdownType].values}
+//             value={value} />
+//     );
+// case "boolean":
+//     return (
+//         <BoolSelectInput label={field.label} name={field.name} onChange={handleChange} value={value} />
+//     );
+// case "textArea":
+//     return (
+//         <TextAreaInput label={field.label} name={field.name} onChange={handleChange} value={value} />
+//     );
+// case "number":
+//     return (
+//         <NumberInput label={field.label} name={field.name} onChange={handleChange} value={value} />
+//     );
+// case "file":
+//     return (
+//         <FileInput label={field.label} name={field.name} onChange={handleChange2} accept={field.accept} />
+//     );

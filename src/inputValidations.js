@@ -52,7 +52,7 @@ export const requiredValidation = (fieldName, value, setError) => {
   }
 };
 
-export const mobileValidation = (fieldName, value, setError) => {
+export const requiredMobileValidation = (fieldName, value, setError) => {
   if (!isPresent(value)) {
     setError(fieldName, alertMsgs.requiredField);
     return alertMsgs.requiredField;
@@ -62,4 +62,25 @@ export const mobileValidation = (fieldName, value, setError) => {
   } else {
     setError(fieldName, "");
   }
+};
+
+export const emailValidation = (fieldName, value, setError) => {
+  if (isPresent(value)) {
+    if (!isEmailValid(value)) {
+      setError(fieldName, alertMsgs.invalidEmail);
+      return alertMsgs.invalidEmail;
+    }
+  }
+  setError(fieldName, "");
+};
+
+
+export const mobileValidation = (fieldName, value, setError) => {
+  if (isPresent(value)) {
+    if (!isMobileValid(value)) {
+      setError(fieldName, alertMsgs.invalidMobile);
+      return alertMsgs.invalidMobile;
+    }
+  }
+  setError(fieldName, "");
 };

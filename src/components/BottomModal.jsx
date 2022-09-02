@@ -14,7 +14,7 @@ const BottomModal = ({modalVisible, setModalVisible, children, closeable}) => {
           }
         }}
       >
-        <View className="flex w-full rounded-t-xl bg-gray-100 absolute bottom-0 pt-4 pb-8">
+        <View className="flex w-full rounded-t-xl bg-gray-100 absolute bottom-0">
             {children}
         </View>
       </Modal>

@@ -1,14 +1,10 @@
-import axios from "axios";
+import instance from "../axiosInstance";
 
-const API_URL = "http://art-dts.herokuapp.com/api"
-
-
-async function loginUser(formData) {
+export async function loginUser(formData) {
 
     console.log("login(" + formData.email + ')');
-    const path = API_URL + "/auth/login";
 
-    return axios.post(path, formData)
+    return instance.post("/auth/login", formData)
         .then(response => {
             console.log(response.data);
             if (response.data != null) {
@@ -21,12 +17,12 @@ async function loginUser(formData) {
             alert(errorResp.response.data.responseMsg);
             return false;
         })
+
 }
 
-async function registerUser(formData) {
+export async function registerUser(formData) {
     console.log("register(" + formData.email + ')');
-    const path = API_URL + "/auth/register";
-    return axios.post(path, formData)
+    return instance.post("/auth/register", formData)
         .then(response => {
             console.log(response.data);
             if (response.data.data != null) {
@@ -40,5 +36,3 @@ async function registerUser(formData) {
             return false;
         })
 }
-
-export { loginUser, registerUser };

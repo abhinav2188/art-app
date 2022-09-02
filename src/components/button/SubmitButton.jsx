@@ -8,6 +8,7 @@ const SubmitButton = (props) => {
   return (
     <TouchableOpacity
       disabled={props.loading}
+      style={props.style}
       className={`flex items-center bg-sky-800 py-4 px-8 rounded-lg disabled:bg-gray-400 disabled:hover:bg-gray-400 ${props.clazzName} `}
       onPress={props.onClick}
     >

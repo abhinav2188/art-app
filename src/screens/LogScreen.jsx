@@ -34,7 +34,7 @@ const [viewLogin, setViewLogin] = useState(true);
   return (
     <View className="flex-1 flex bg-sky-800">
       <Image source={logo} className="w-24 h-24 self-center rounded-lg mt-12 shadow"/>
-      <View className="flex">
+      <View>
         <BottomModal modalVisible={viewLogin} setModalVisible={setViewLogin} closeable={false}>
           <Login toggleRegister={toggleRegister}/>
         </BottomModal>

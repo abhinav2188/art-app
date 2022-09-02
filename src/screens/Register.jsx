@@ -94,8 +94,9 @@ export default function Register({ toggleLogin }) {
         setErrors={setErrors}
         otherFormValidations={otherFormValidations}
         buttonTitle="Register"
+        buttonIcon
       />
-      <View className="flex p-4">
+      <View className="flex px-4 py-12">
         <TouchableOpacity
           onPress={toggleLogin}
           className="border border-sky-500 py-4 items-center rounded-lg"
