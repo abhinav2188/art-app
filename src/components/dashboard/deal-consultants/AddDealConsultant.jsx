@@ -17,12 +17,14 @@ const formFields = [
         label: "Email",
         name: "email",
         type: "text",
+        inputType:"email",
         validateFunc: primaryEmailValidation
     },
     {
         label: "Mobile",
         name: "mobile",
         type: "text",
+        inputType:"integer",
         validateFunc: requiredMobileValidation
     },
     {

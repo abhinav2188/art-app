@@ -16,6 +16,7 @@ import NativeTextInput from "../../input/NativeTextInput";
 import { LeftArrow, User } from "../../../svgIcons";
 import colors from "tailwindcss/colors";
 import FormTitle from "../../FormTitle";
+import MenuButton from "../MenuButton";
 
 const initialData = {
   cardDetails: {
@@ -133,24 +134,22 @@ const UpdateDeal = ({ navigation, route }) => {
               setDealDetails={setDealDetails}
               data={dealDetails.additionalDetails}
             />
-            <TouchableOpacity
+            <MenuButton
               onPress={() =>
                 navigation.jumpTo("dealContacts", { dealId: dealId })
               }
-            >
-              <FormTitle Icon={User}>
-                <Text>Deal Contacts</Text>
-              </FormTitle>
-            </TouchableOpacity>
-            <TouchableOpacity
+              Icon={User}
+              title1="Deal"
+              title2="Contacts"
+            />
+            <MenuButton
               onPress={() =>
                 navigation.jumpTo("dealConsultants", { dealId: dealId })
               }
-            >
-              <FormTitle Icon={User}>
-                <Text>Deal Consultants</Text>
-              </FormTitle>
-            </TouchableOpacity>
+              Icon={User}
+              title1="Deal"
+              title2="Consultants"
+            />
             {/* 
                         <DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />
                         <DealContacts dealId={dealId} />

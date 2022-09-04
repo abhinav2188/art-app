@@ -48,7 +48,7 @@ const DealContacts = ({ route, navigation, add, style }) => {
 
   useEffect(() => {
     loadData(pageNo);
-  }, [pageNo]);
+  }, [pageNo, dealId]);
 
   useEffect(() => {
     setPageNo(0);
@@ -58,6 +58,7 @@ const DealContacts = ({ route, navigation, add, style }) => {
   function addContactToView(contact) {
     setData((prevState) => ({
       ...prevState,
+      totalCount: prevState.totalCount+1,
       contacts: [contact, ...prevState.contacts],
     }));
   }
