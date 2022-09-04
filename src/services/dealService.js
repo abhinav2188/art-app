@@ -94,10 +94,14 @@ export async function putDealSection4(dealId, data) {
         })
 }
 
-export async function getDeal(dealId) {
+export async function getDeal(dealId,userId) {
     console.log("getDeal()");
-    const path = "/int/deals/" + dealId;
-    return instance.get(path).then(
+    const path = "/ext/deals/" + dealId;
+    return instance.get(path, {
+        params:{
+            userId
+        }
+    }).then(
         response => {
             console.log("response data:", response.data);
             alert(response.data.responseMsg);

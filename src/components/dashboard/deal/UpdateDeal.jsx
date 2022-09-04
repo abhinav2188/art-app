@@ -1,0 +1,140 @@
+import React, { useEffect, useState } from "react";
+import { getDeal } from "../../../services/dealService";
+import DealContacts from "../deal-contacts/DealContacts";
+import DealSection2 from "./DealSection2";
+import DealSection1 from "./DealSection1";
+import DealSection3 from "./DealSection3";
+import DealSection4 from "./DealSection4";
+import DealOwners from "./DealOwners";
+import DealConsultants from "../deal-consultants/DealConsultants";
+import DealInteractions from "../deal-interactions/DealInteractions";
+import DealQuery from "../dealQuery/DealQuery";
+import DealAttachments from "../deal-attachment/DealAttachments";
+import ActionButton from "../../../components/button/ActionButton";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import NativeTextInput from "../../input/NativeTextInput";
+import { LeftArrow, User } from "../../../svgIcons";
+import colors from "tailwindcss/colors";
+import FormTitle from "../../FormTitle";
+
+
+const initialData = {
+    cardDetails: {
+        createTimestamp: "",
+        updateTimestamp: "",
+        dealId: "",
+        dealName: "",
+        partyName: "",
+        partyId: "",
+        dealStage: "",
+        openingDate: "",
+        isActive: ""
+    },
+    productDetails: {
+        productType: "",
+        subCategoryProduct: "",
+        unitOfQuantity: "",
+        orderSizeFactor: "",
+        typeOfWork: "",
+        roadDetails: ""
+    },
+    commonDetails: {
+        siteLocation: "",
+        cateredByVertical: "",
+        paymentType: "",
+        openingDate: "",
+        expectedCloseDate: "",
+        actualCloseDate: "",
+        expectedNumberOfDays: "",
+        expectedDeliveryAddress: "",
+        lastPurchaseDetails: "",
+        competitorsInfo: "",
+        remarks: ""
+    },
+    additionalDetails: {
+        dealStage: "",
+        isActive: "",
+        dealValueInCr: "",
+        paymentTerms: "",
+        paymentFactor: "",
+        ownerFocus: "",
+        dealProbability: "",
+        expectedTurnover: "",
+        proximityFromBase: ""
+    },
+    authorizationDetails: {
+        owner: "",
+        coOwners: [
+        ]
+    }
+};
+
+const UpdateDeal = ({ navigation, route }) => {
+
+    const [dealDetails, setDealDetails] = useState(initialData);
+
+    let [flag, setFlag] = useState(true);
+
+    const ReloadDealButton = <ActionButton type="reload" onClick={() => setFlag(f => !f)} />
+
+    const [dealId,setDealId] = useState(route.params.dealId);
+
+    useEffect(()=>{
+        setDealId(route.params.dealId);
+    },[route.params.dealId])
+
+    useEffect(() => {
+        console.log(flag);
+        if (!dealId) return;
+        getDeal(dealId).then(
+            response => {
+                if (response) {
+                    setDealDetails(response.data);
+                }
+            }
+        );
+
+    }, [dealId, flag])
+
+    return (
+        <ScrollView className="flex p-4">
+      <View>
+        <TouchableOpacity
+          className="w-8 h-8 bg-gray-400 rounded-full"
+          onPress={() => navigation.jumpTo("dashboardMenu")}
+        >
+          <LeftArrow fill={colors.sky[800]} />
+        </TouchableOpacity>
+      </View>
+        {/* <NativeTextInput value={dealId} label="deal id" onChange={(n,v)=> setDealId(v)} name="dealId" inputType="text" /> */}
+            {
+    
+                dealId ?
+                    <View className="flex flex-col gap-8 py-8">
+                        <DealSection1 setDealDetails={setDealDetails} data={dealDetails.cardDetails} reloadDealButton={ReloadDealButton} />
+                        {/* <DealQuery dealId={dealId} /> */}
+                        <DealSection2 dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.productDetails} />
+                        <DealSection3 dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.commonDetails} />
+                        <DealSection4 dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.additionalDetails} />
+                        <TouchableOpacity onPress={() => navigation.jumpTo("dealContacts", {dealId:dealId})}>
+                            <FormTitle Icon={User}>
+                                <Text>Deal Contacts</Text>
+                            </FormTitle>
+                        </TouchableOpacity>
+                        {/* 
+                        <DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />
+                        <DealContacts dealId={dealId} />
+                        <DealConsultants dealId={dealId} />
+                        <DealInteractions dealId={dealId} />
+                        <DealAttachments dealId={dealId} /> */}
+                    </View> :
+                    <View className="flex flex-col gap-8 py-8">
+                        <Text>Select a deal from view section</Text>
+                    </View> 
+            }
+        </ScrollView>
+            
+    );
+}
+
+export default UpdateDeal;

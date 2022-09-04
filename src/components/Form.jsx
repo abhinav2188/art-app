@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { Star } from "../svgIcons";
 import ActionButton from "./button/ActionButton";
 import SubmitButton from "./button/SubmitButton";
@@ -85,11 +85,13 @@ const Form = ({
 
   return (
 
-    <View className="rounded-xl flex flex-col gap-y-4" style={style}>
+    <View className="rounded-xl space-y-4 flex flex-col border border-gray-400 pb-4" style={style}>
 
-      <FormTitle Icon={Star}>
+      {
+        !!title &&
+      <View className="border-b border-gray-400 p-2">
         <View className="flex flex-row items-center gap-x-2">
-          <Text className="text-lg font-bold text-white uppercase">
+          <Text className="text-lg font-light capitalize">
             {title}
           </Text>
           <View>
@@ -98,22 +100,23 @@ const Form = ({
             )}
           </View>
         </View>
-      </FormTitle>
+      </View>
+      }
 
-      <View className={`flex flex-col gap-y-4 px-4`}>
+      <View className="flex flex-col gap-y-4 px-2">
         {fields.map((field) => (
           <CustomInput
             key={field.name}
             field={field}
             handleChange={handleChange}
             value={formData[field.name]}
-            errorMsg={errors[field.name]}
+            errorMsg={!!errors ? errors[field.name] : ""}
             dropdowns={dropdowns}
           />
         ))}
       </View>
 
-      <View className="px-4">
+      <View className="px-2">
         <SubmitButton onClick={handleSubmit} loading={loading}>
           {!!buttonTitle ? buttonTitle : "Submit"}
         </SubmitButton>

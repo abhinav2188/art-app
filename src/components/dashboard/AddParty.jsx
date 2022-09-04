@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import colors from "tailwindcss/colors";
 import { emailValidation, mobileValidation, primaryEmailValidation, requiredValidation } from "../../inputValidations";
 import { getDropdownValues } from "../../services/dropdownService";
 import { postParty } from "../../services/partyService";
+import { LeftArrow } from "../../svgIcons";
 import Form from "../Form";
 
 const formFields = [
@@ -87,6 +89,10 @@ const AddParty = ({ navigation }) => {
 
     return (
         <View className="flex py-8 px-4">
+            <TouchableOpacity 
+            className="w-8 h-8 bg-gray-400 rounded-full"
+            onPress={() => navigation.jumpTo("dashboardMenu")}
+            ><LeftArrow fill={colors.sky[800]}/></TouchableOpacity>
             <Form
                 title="ADD New Party"
                 fields={formFields}

@@ -2,21 +2,13 @@ import React from "react";
 import { Text, TextInput, View } from "react-native";
 import InputInfo from "./InputInfo";
 
-const inputTypeMap = {
-  email: "email-address",
-  integer: "number-pad",
-  decimal: "decimal-pad",
-  mobile: "phone-pad",
-};
-
-const NativeTextInput = ({
+const NativeTextArea = ({
   name,
   value,
   label,
   onChange,
   description,
   errorMsg,
-  inputType,
   clazzName,
   style
 }) => {
@@ -39,13 +31,13 @@ const NativeTextInput = ({
         }`}
         onChangeText={onChangeHandler}
         value={String(value)}
-        keyboardType={inputTypeMap[inputType]}
+        multiline={true}
       />
-      </View>
+    </View>
   );
 };
 
-// NativeTextInput.propTypes = {
+// NativeTextArea.propTypes = {
 //   name: PropTypes.string,
 //   label: PropTypes.string,
 //   value: PropTypes.string,
@@ -56,4 +48,4 @@ const NativeTextInput = ({
 //   errorMsg: PropTypes.string,
 // };
 
-export default NativeTextInput;
+export default NativeTextArea;

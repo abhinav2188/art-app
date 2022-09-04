@@ -32,7 +32,7 @@ const [viewLogin, setViewLogin] = useState(true);
   }
 
   return (
-    <View className="flex-1 flex bg-sky-800">
+    <View className="flex-1 flex bg-white">
       <Image source={logo} className="w-24 h-24 self-center rounded-lg mt-12 shadow"/>
       <View>
         <BottomModal modalVisible={viewLogin} setModalVisible={setViewLogin} closeable={false}>

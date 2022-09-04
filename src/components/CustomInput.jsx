@@ -1,4 +1,6 @@
 import React from "react";
+import DateInput from "./input/DateInput";
+import NativeTextArea from "./input/NativeTextArea";
 import NativeTextInput from "./input/NativeTextInput";
 import NativeTextPassword from "./input/NativeTextPassword";
 import SelectInput from "./input/SelectInput";
@@ -54,15 +56,37 @@ const CustomInput = ({
           style={style}
         />
       );
+    case "textArea":
+      return (
+        <NativeTextArea
+          name={field.name}
+          label={field.label}
+          description={field.description}
+          value={value}
+          errorMsg={errorMsg}
+          onChange={handleChange}
+          clazzName={clazzName}
+          style={style}
+        />
+      );
+    case "date":
+      return (
+        <DateInput
+          name={field.name}
+          label={field.label}
+          description={field.description}
+          value={value}
+          errorMsg={errorMsg}
+          onChange={handleChange}
+          clazzName={clazzName}
+          style={style}
+        />
+      );
   }
 };
 
 export default CustomInput;
 
-// case "date":
-//     return (
-//         <DateInput label={field.label} name={field.name} onChange={handleChange} value={value} />
-//     );
 // case "dropdown2":
 //     return (
 //         <SelectInput label={field.label} name={field.name} onChange={handleChange}
@@ -72,10 +96,6 @@ export default CustomInput;
 // case "boolean":
 //     return (
 //         <BoolSelectInput label={field.label} name={field.name} onChange={handleChange} value={value} />
-//     );
-// case "textArea":
-//     return (
-//         <TextAreaInput label={field.label} name={field.name} onChange={handleChange} value={value} />
 //     );
 // case "number":
 //     return (

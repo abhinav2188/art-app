@@ -1,10 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
+import ViewDeals from "../components/dashboard/deal/ViewDeals";
 
-export const DealScreen = () => {
+export const DealScreen = ({navigation}) => {
     return (
-        <View className="flex w-11/12 p-4">
-            <Text>Deals</Text>
+        <View className="flex">
+            <ViewDeals navigation={navi}/>
         </View>
     );
 }

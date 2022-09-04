@@ -15,7 +15,7 @@ const SelectInput = ({
   clazzName,
 }) => {
 
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(value);
   const [options, setOptions] = useState([]);
 
   useEffect(() => {

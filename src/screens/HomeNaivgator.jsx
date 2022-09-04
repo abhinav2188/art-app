@@ -4,6 +4,7 @@ import { TabActions, useLinkProps } from "@react-navigation/native";
 import React, { useContext, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import colors from "tailwindcss/colors";
+import ViewDeals from "../components/dashboard/deal/ViewDeals";
 import UserContext from "../context/UserContext";
 import { Document, Home, User } from "../svgIcons";
 import { DashboardScreen } from "./DashboardScreen";
@@ -46,7 +47,7 @@ const HomeNavigator = ({ navigation }) => {
         tabBarInactiveTintColor: colors.gray[300],
       })}>
         <Tab.Screen name="dashboard" component={DashboardScreen} />
-        <Tab.Screen name="deals" component={DealScreen} />
+        <Tab.Screen name="deals" component={ViewDeals} />
         <Tab.Screen name="profile" component={ProfileScreen} />
       </Tab.Navigator>
   );

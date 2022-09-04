@@ -1,18 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { LeftArrow, RightArrow } from "../../svgs/svgIcons";
+import { Text, TouchableOpacity, View } from "react-native";
+import { LeftArrow, RightArrow } from "../../svgIcons";
 
 const PageButton = (props) => {
     return (
-        <div className="flex items-center border rounded-full h-5">
-            <button className="w-5" onClick={() => {
+        <View className="flex items-center border rounded-full h-5">
+            <TouchableOpacity className="w-5" onClick={() => {
                 props.setPageNo(prevPageNo => (prevPageNo - 1) < 0 ? prevPageNo : prevPageNo - 1);
-            }}>{LeftArrow}</button>
-            <p className="px-1">{props.pageNo + 1}</p>
-            <button className="w-5" onClick={() => {
+            }}><LeftArrow /></TouchableOpacity>
+            <Text className="px-1">{props.pageNo + 1}</Text>
+            <TouchableOpacity className="w-5" onClick={() => {
                 props.setPageNo(prevPageNo => (prevPageNo + 1) >= props.totalPagesCount ? prevPageNo : prevPageNo + 1);
-            }}>{RightArrow}</button>
-        </div>
+            }}><RightArrow/></TouchableOpacity>
+        </View>
     )
 }
 

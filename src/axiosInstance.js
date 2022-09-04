@@ -2,7 +2,8 @@ import axios from "axios";
 import { localStorage } from "./localStorage";
 
 let instance = axios.create({
-    baseURL: "http://art-dts.herokuapp.com/api" 
+    baseURL: "http://192.168.1.6:8082/api" 
+    // baseURL: "http://art-dts.herokuapp.com/api" ,
 });
 
 instance.interceptors.request.use(
@@ -14,7 +15,7 @@ instance.interceptors.request.use(
             req.headers.Authorization = authToken;
         }
         req.headers['Access-Control-Allow-Origin'] = '*';
-        console.log("requesting: ",req.url);
+        console.log("requesting: ",req.baseURL+req.url);
         console.log("request params: ",req.params);
         console.log("request headers:", req.headers);
         console.log("request body: ",req.data);
@@ -29,7 +30,7 @@ instance.interceptors.response.use((response) => {
     console.log("interceptor: " + response);
     return response;
 }, error => {
-    console.log(error);
+    console.error(error);
     console.log("interceptor error: " + error.code);
     return Promise.reject(error);
 });
