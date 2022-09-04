@@ -23,7 +23,7 @@ export async function getAllDealContacts(dealId, pageNo) {
     const path = "/ext/contacts/" + dealId;
     return instance.get(path, {
         params: {
-            pageNo
+            pageNo,
         }
     }).then(
         response => {

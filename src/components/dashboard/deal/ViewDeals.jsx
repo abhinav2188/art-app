@@ -8,6 +8,7 @@ import { Document } from "../../../svgIcons";
 
 const ViewDeals = ({ navigation }) => {
   const [pageNo, setPageNo] = useState(0);
+
   const [data, setData] = useState({
     totalCount: 0,
     totalPages: 0,
@@ -15,6 +16,8 @@ const ViewDeals = ({ navigation }) => {
   });
 
   const [flag, setFlag] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const loadData = (pageNo) => {
     console.log("getAllDeals()");
@@ -43,8 +46,6 @@ const ViewDeals = ({ navigation }) => {
     loadData(0);
   }, [flag]);
 
-  const [loading, setLoading] = useState(false);
-
   return (
     <View className="flex flex-col w-full py-4 px-4 space-y-4">
       <MenuButton
@@ -67,20 +68,32 @@ const ViewDeals = ({ navigation }) => {
         />
       </View>
       <View className="flex space-y-4">
-        {data.deals.length > 0 ? (
-          data.deals.map((deal) => (
-            <DealCard
-              data={deal}
-              key={deal.dealId}
-              onClick={() => {
-                navigation.navigate("updateDeal",{
-                    screen:"deal", params : { dealId: deal.dealId }
-                });
-              }}
-            />
-          ))
-        ) : (
-          <Text>No enteries</Text>
+        {data.deals.map((deal) => (
+          <DealCard
+            data={deal}
+            key={deal.dealId}
+            onClick={() => {
+              navigation.navigate("updateDeal", {
+                screen: "deal",
+                params: { dealId: deal.dealId },
+              });
+            }}
+          />
+        ))}
+      </View>
+
+      <View>
+        {pageNo + 1 < data.totalPageCount && (
+          <SubmitButton2
+            loading={loading}
+            onClick={() => {
+              setPageNo((prev) =>
+                prev + 1 < data.totalPageCount ? prev + 1 : prev
+              );
+            }}
+          >
+            View More
+          </SubmitButton2>
         )}
       </View>
     </View>

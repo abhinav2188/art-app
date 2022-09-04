@@ -9,7 +9,7 @@ const SectionHeader = ({title, totalCount, actions, style}) => (
         {totalCount}
       </Text>
     </View>
-    <View className="flex flex-row space-x-1">
+    <View className="flex flex-row space-x-2">
         {actions}
     </View>
   </View>
