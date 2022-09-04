@@ -40,7 +40,7 @@ const SelectInput = ({
   return (
     <View className={`flex flex-col ${clazzName}`} style={style}>
       <View className="flex flex-row items-center h-6">
-      <Text className="font-bold uppercase text-sky-800">{label}</Text>
+      <Text className="font-bold uppercase text-sky-600">{label}</Text>
       <InputInfo description={description} errorMsg={errorMsg} />
       </View>
       <View 

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
+import SubmitButton2 from "../components/button/SubmitButton2";
 import Form from "../components/Form";
 import UserContext from "../context/UserContext";
 import {
@@ -59,7 +60,7 @@ export default function Login({ toggleRegister }) {
   };
 
   return (
-    <View className="flex">
+    <View className="flex pt-4 pb-8 space-y-4 px-2 border rounded-t-xl border-gray-400">
       <Form
           fields={formFields}
           formData={formData}
@@ -68,16 +69,20 @@ export default function Login({ toggleRegister }) {
           setErrors={setErrors}
           onSubmit={handleSubmit}
           loading={loading}
-          title="Login User"
           buttonTitle="Login"
+          className="border-0"
       />
-      <View className="px-4 py-12">
-        <TouchableOpacity
+      <View className="px-2">
+        <SubmitButton2 onClick={toggleRegister}>
+        New User? Register
+        </SubmitButton2>
+        {/* <TouchableOpacity
           onPress={toggleRegister}
           className="border border-sky-500 py-4 items-center rounded-lg"
         >
-          <Text className="font-bold text-sky-500">New User? Register</Text>
-        </TouchableOpacity>
+          <Text className="font-bold text-sky-500"></Text>
+        </TouchableOpacity> */}
+
       </View>
     </View>
   );

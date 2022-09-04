@@ -37,7 +37,7 @@ const ActionButton = (props) => {
   
 
   return (
-    <TouchableNativeFeedback disabled={props.loading} onPress={props.onClick}>
+    <TouchableNativeFeedback disabled={props.loading} onPress={props.onClick} style={props.style}>
       {props.loading ? (
         <ActivityIndicator color={colors.gray[600]}/>
       ) : !!props.type ? (
@@ -52,6 +52,7 @@ const ActionButton = (props) => {
 ActionButton.propTypes = {
   loading: PropTypes.bool,
   onClick: PropTypes.func,
+  type: PropTypes.string
 };
 
 export default ActionButton;

@@ -88,9 +88,9 @@ const Form = ({
     <View className="rounded-xl space-y-4 flex flex-col border border-gray-400 pb-4" style={style}>
 
       {
-        !!title &&
+        !!title?
       <View className="border-b border-gray-400 p-2">
-        <View className="flex flex-row items-center gap-x-2">
+        <View className="flex flex-row items-center space-x-2">
           <Text className="text-lg font-light capitalize">
             {title}
           </Text>
@@ -100,10 +100,11 @@ const Form = ({
             )}
           </View>
         </View>
-      </View>
+      </View>:<View></View>
       }
 
-      <View className="flex flex-col gap-y-4 px-2">
+      <View className="flex space-y-6 px-2">
+      <View className="flex flex-col space-y-2">
         {fields.map((field) => (
           <CustomInput
             key={field.name}
@@ -116,10 +117,10 @@ const Form = ({
         ))}
       </View>
 
-      <View className="px-2">
         <SubmitButton onClick={handleSubmit} loading={loading}>
           {!!buttonTitle ? buttonTitle : "Submit"}
         </SubmitButton>
+
       </View>
 
     </View>

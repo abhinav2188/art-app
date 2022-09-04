@@ -28,7 +28,7 @@ const NativeTextInput = ({
   return (
     <View className={`flex flex-col ${clazzName}`} style={style}>
       <View className="flex flex-row items-center h-6">
-        <Text className="text-sky-800 font-bold uppercase ">
+        <Text className="text-sky-600 font-bold uppercase ">
           {label}
         </Text>
         <InputInfo description={description} errorMsg={errorMsg} />

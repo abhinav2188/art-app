@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  Text,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import SubmitButton2 from "../components/button/SubmitButton2";
 import Form from "../components/Form";
 import {
   mobileValidation,
@@ -82,27 +76,24 @@ export default function Register({ toggleLogin }) {
   };
 
   return (
-    <View>
+    <View className="flex pt-4 pb-8 space-y-4 px-2 border rounded-t-xl border-gray-400">
       <Form
         fields={formFields}
         formData={formData}
         setFormData={setFormData}
         onSubmit={handleSubmit}
         loading={loading}
-        title="Register New User"
         errors={errors}
         setErrors={setErrors}
         otherFormValidations={otherFormValidations}
         buttonTitle="Register"
         buttonIcon
+        className="border-0"
       />
-      <View className="flex px-4 py-12">
-        <TouchableOpacity
-          onPress={toggleLogin}
-          className="border border-sky-500 py-4 items-center rounded-lg"
-        >
-          <Text className="font-bold text-sky-500">Existing User? Login</Text>
-        </TouchableOpacity>
+      <View className="px-2">
+        <SubmitButton2 onClick={toggleLogin}>
+          Existing User? Login
+        </SubmitButton2>
       </View>
     </View>
   );

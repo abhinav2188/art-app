@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Form from "../../../components/Form";
+import { primaryEmailValidation, requiredMobileValidation, requiredValidation } from "../../../inputValidations";
 import { addDealConsultant } from "../../../services/consultantService";
 import { getDropdownValues } from "../../../services/dropdownService";
 
@@ -9,17 +10,20 @@ const formFields = [
     {
         label: "Full Name",
         name: "name",
-        type: "text"
+        type: "text",
+        validateFunc: requiredValidation
     },
     {
         label: "Email",
         name: "email",
-        type: "text"
+        type: "text",
+        validateFunc: primaryEmailValidation
     },
     {
         label: "Mobile",
         name: "mobile",
-        type: "text"
+        type: "text",
+        validateFunc: requiredMobileValidation
     },
     {
         label: "Designation",
@@ -39,6 +43,8 @@ const initialData = {
 const AddDealConsultant = ({ dealId, addConsultantToView, setDisplay }) => {
 
     const [formData, setFormData] = useState(initialData);
+
+    const [errors, setErrors] = useState(initialData);
 
     const [dropdowns, setDropdowns] = useState({
         CONSULTANT_DESIGNATION: {
@@ -88,6 +94,9 @@ const AddDealConsultant = ({ dealId, addConsultantToView, setDisplay }) => {
             onSubmit={handleSubmit}
             loading={loading}
             reloadDropdown={reloadDropdown}
+            errors={errors}
+            setErrors={setErrors}
+            buttonTitle="Add Consultant"
         />
     );
 

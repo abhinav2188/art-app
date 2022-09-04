@@ -15,14 +15,8 @@ export const DashboardMenu = ({ navigation }) => (
           Icon={Star}
         />
         <MenuButton
-          title1="add"
-          title2="new deal"
-          onPress={() => navigation.jumpTo("addDeal")}
-          Icon={Document}
-        />
-        <MenuButton
           title1="My deals"
-          onPress={() => navigation.navigate("deals")}
+          onPress={() => navigation.navigate("myDeals")}
           Icon={Document}
         />
       </View>

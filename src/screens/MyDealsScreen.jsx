@@ -7,17 +7,18 @@ import DealContacts from "../components/dashboard/deal-contacts/DealContacts";
 import AddDeal from "../components/dashboard/deal/AddDeal";
 import UpdateDeal from "../components/dashboard/deal/UpdateDeal";
 import ViewDeals from "../components/dashboard/deal/ViewDeals";
+import { DealScreen } from "./DealScreen";
 
-export const DealScreen = ({route}) => {
+export const MyDealsScreen = () => {
 
-  const DealNavigator = createBottomTabNavigator();
+  const MyDealsNavigator = createBottomTabNavigator();
 
   return (
-    <DealNavigator.Navigator initialRouteName="dashboardMenu" tabBar={() => <></>}
+    <MyDealsNavigator.Navigator initialRouteName="dashboardMenu" tabBar={() => <></>}
     screenOptions={{headerShown:false}}>
-      <DealNavigator.Screen name="deal" component={UpdateDeal}/>
-      <DealNavigator.Screen name="dealContacts" component={DealContacts} />
-      <DealNavigator.Screen name="dealConsultants" component={DealConsultants} />
-    </DealNavigator.Navigator>
+      <MyDealsNavigator.Screen name="viewDeals" component={ViewDeals} />        
+      <MyDealsNavigator.Screen name="addDeal" component={AddDeal} />
+      <MyDealsNavigator.Screen name="updateDeal" component={DealScreen} />
+    </MyDealsNavigator.Navigator>
   );
 };

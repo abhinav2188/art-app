@@ -9,6 +9,7 @@ import UserContext from "../context/UserContext";
 import { Document, Home, User } from "../svgIcons";
 import { DashboardScreen } from "./DashboardScreen";
 import { DealScreen } from "./DealScreen";
+import { MyDealsScreen } from "./MyDealsScreen";
 import ProfileScreen from "./ProfileScreen";
 
 
@@ -34,7 +35,7 @@ const HomeNavigator = ({ navigation }) => {
             case "profile" : 
             icon = <User fill={color}/>
             break;
-            case "deals":
+            case "myDeals":
             icon = <Document fill={color}/>    
             break;     
             case "dashboard" :
@@ -47,7 +48,7 @@ const HomeNavigator = ({ navigation }) => {
         tabBarInactiveTintColor: colors.gray[300],
       })}>
         <Tab.Screen name="dashboard" component={DashboardScreen} />
-        <Tab.Screen name="deals" component={ViewDeals} />
+        <Tab.Screen name="myDeals" component={MyDealsScreen} />
         <Tab.Screen name="profile" component={ProfileScreen} />
       </Tab.Navigator>
   );

@@ -75,7 +75,6 @@ const AddDealContact = ({ dealId, addContactToView, setDisplay, style }) => {
         }
     });
 
-
     const [flag, setFlag] = useState(true);
 
     const reloadDropdown = () => setFlag(f => !f);

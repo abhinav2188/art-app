@@ -10,97 +10,124 @@ import DealInteractions from "../deal-interactions/DealInteractions";
 import DealQuery from "../dealQuery/DealQuery";
 import DealAttachments from "../deal-attachment/DealAttachments";
 import { Text, TouchableOpacity, View } from "react-native";
-import { LeftArrow } from "../../../svgIcons";
+import { LeftArrow, Star } from "../../../svgIcons";
 import colors from "tailwindcss/colors";
 import { ScrollView } from "react-native-gesture-handler";
+import GoBackButton from "../../button/GoBackButton";
+import MenuButton from "../MenuButton";
+import SubmitButton2 from "../../button/SubmitButton2";
 
 const initialData = {
-    cardDetails: {
-        createTimestamp: "",
-        updateTimestamp: "",
-        dealId: "",
-        dealName: "",
-        partyName: "",
-        partyId: "",
-        dealStage: "",
-        openingDate: "",
-        isActive: ""
-    },
-    productDetails: {
-        productType: "",
-        subCategoryProduct: "",
-        unitOfQuantity: "",
-        orderSizeFactor: "",
-        typeOfWork: "",
-        roadDetails: ""
-    },
-    commonDetails: {
-        siteLocation: "",
-        cateredByVertical: "",
-        paymentType: "",
-        openingDate: "",
-        expectedCloseDate: "",
-        actualCloseDate: "",
-        expectedNumberOfDays: "",
-        expectedDeliveryAddress: "",
-        lastPurchaseDetails: "",
-        competitorsInfo: "",
-        remarks: ""
-    },
-    additionalDetails: {
-        dealStage: "",
-        isActive: "",
-        dealValueInCr: "",
-        paymentTerms: "",
-        paymentFactor: "",
-        ownerFocus: "",
-        dealProbability: "",
-        expectedTurnover: "",
-        proximityFromBase: ""
-    },
-    authorizationDetails: {
-        owner: "",
-        coOwners: [
-        ]
-    }
-}
+  cardDetails: {
+    createTimestamp: "",
+    updateTimestamp: "",
+    dealId: "",
+    dealName: "",
+    partyName: "",
+    partyId: "",
+    dealStage: "",
+    openingDate: "",
+    isActive: "",
+  },
+  productDetails: {
+    productType: "",
+    subCategoryProduct: "",
+    unitOfQuantity: "",
+    orderSizeFactor: "",
+    typeOfWork: "",
+    roadDetails: "",
+  },
+  commonDetails: {
+    siteLocation: "",
+    cateredByVertical: "",
+    paymentType: "",
+    openingDate: "",
+    expectedCloseDate: "",
+    actualCloseDate: "",
+    expectedNumberOfDays: "",
+    expectedDeliveryAddress: "",
+    lastPurchaseDetails: "",
+    competitorsInfo: "",
+    remarks: "",
+  },
+  additionalDetails: {
+    dealStage: "",
+    isActive: "",
+    dealValueInCr: "",
+    paymentTerms: "",
+    paymentFactor: "",
+    ownerFocus: "",
+    dealProbability: "",
+    expectedTurnover: "",
+    proximityFromBase: "",
+  },
+  authorizationDetails: {
+    owner: "",
+    coOwners: [],
+  },
+};
 
-const AddDeal = ({navigation}) => {
+const AddDeal = ({ navigation }) => {
+  const [dealId, setDealId] = useState(null);
 
-    const [dealId, setDealId] = useState(null);
+  const [dealDetails, setDealDetails] = useState(initialData);
 
-    const [dealDetails, setDealDetails] = useState(initialData);
-
-    return (
-        <ScrollView className="flex flex-col gap-y-4 pt-4 px-4 ">
-      <View>
-        <TouchableOpacity
-          className="w-8 h-8 bg-gray-400 rounded-full"
-          onPress={() => navigation.jumpTo("dashboardMenu")}
-        >
-          <LeftArrow fill={colors.sky[800]} />
-        </TouchableOpacity>
+  return (
+    <ScrollView>
+      <View className="flex flex-col space-y-4 py-4 px-4 ">
+        <View>
+          <GoBackButton navigation={navigation} />
+        </View>
+        <MenuButton
+          title1="add"
+          title2="new party"
+          onPress={() => navigation.navigate("addParty")}
+          Icon={Star}
+        />
+        <DealSection1
+          setDealId={setDealId}
+          setDealDetails={setDealDetails}
+          data={dealDetails.cardDetails}
+          edit
+        />
+        {dealId ? (
+          <View className="flex flex-col space-y-4">
+            <DealSection2
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.productDetails}
+              edit
+            />
+            <DealSection3
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.commonDetails}
+              edit
+            />
+            <DealSection4
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.additionalDetails}
+              edit
+            />
+          </View>
+        ) : (
+          <Text></Text>
+        )}
       </View>
-            <DealSection1 setDealId={setDealId} setDealDetails={setDealDetails} data={dealDetails.cardDetails} edit />
-            {
-                dealId ?
-                <View className="flex flex-col gap-8">
-                    <DealSection2 dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.productDetails} edit />
-                    </View> : <Text></Text>
-                }
-        </ScrollView>
-    );
-}
+    </ScrollView>
+  );
+};
 
 export default AddDeal;
 
-{/* 
+{
+  /* 
 <DealQuery dealId={dealId} /> 
-<DealSection3 dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.commonDetails} edit />
-<DealSection4 dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.additionalDetails} edit />
 <DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />
 <DealContacts dealId={dealId} />
 <DealConsultants dealId={dealId} />
 <DealInteractions dealId={dealId} />
 <DealAttachments dealId={dealId} />
-*/}
+*/
+}

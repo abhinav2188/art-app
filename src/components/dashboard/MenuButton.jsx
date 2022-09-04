@@ -10,15 +10,15 @@ const MenuButton = ({ title1, title2, Icon, onPress, style }) => {
         onPress={onPress}
       >
         <View className="flex">
-          <Text className="font-bold uppercase text-xl text-gray-100 flex">
+          <Text className="font-bold uppercase text-xl text-gray-100 flex translate-y-1">
             {title1}
           </Text>
-          <Text className="uppercase text-lg -translate-y-2  text-gray-100 flex">
+          <Text className="uppercase text-lg -translate-y-1  text-gray-100 flex">
             {title2}
           </Text>
         </View>
-        <View className="w-24 h-24">
-          <View className="w-32 h-32 -rotate-12">
+        <View className="w-16 h-16">
+          <View className="w-24 h-24 -rotate-12">
             <Icon fill={colors.gray[400]} />
           </View>
         </View>
