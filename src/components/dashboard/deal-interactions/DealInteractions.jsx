@@ -1,124 +1,134 @@
 import React, { useEffect, useState } from "react";
+import { ScrollView, View } from "react-native";
 import ActionButton from "../../../components/button/ActionButton";
-import Table from "../../../components/Table";
-import { deleteDealInteraction, getAllDealInteractions } from "../../../services/dealInteractionsService";
+import { getAllDealInteractions } from "../../../services/dealInteractionsService";
+import GoBackButton from "../../button/GoBackButton";
+import SubmitButton2 from "../../button/SubmitButton2";
+import SectionHeader from "../../SectionHeader";
+import InteractionCard from "../../viewCards/InteractionCard";
 import AddDealInteraction from "./AddDealInteraction";
 
-const viewFields = [
-    {
-        label: "Created At",
-        name: "createTimestamp",
-    },
-    {
-        label: "Deal Stage",
-        name: "dealStage",
-    },
-    {
-        label: "Meeting Date",
-        name: "meetingDate",
-    },
-    {
-        label: "Meeting Location",
-        name: "meetingLocation",
-    },
-    {
-        label: "Contacts",
-        name: "contacts",
-    },
-    {
-        label: "Consultants",
-        name: "consultants",
-    },
-    {
-        label: "Handlers",
-        name: "handlers",
-    },
-    {
-        label: "Meeting Details",
-        name: "meetingDetails",
-    }
-];
+const DealInteractions = ({ route, navigation, add, style }) => {
+  const [data, setData] = useState({
+    totalCount: 0,
+    totalPageCount: 0,
+    interactions: [],
+  });
+  const [pageNo, setPageNo] = useState(0);
 
-const DealInteractions = ({ dealId, add }) => {
+  const [dealId, setDealId] = useState(route.params.dealId);
 
-    const [data, setData] = useState({
-        totalCount: 0,
-        totalPageCount: 0,
-        interactions: []
-    });
-    const [pageNo, setPageNo] = useState(0);
+  const [flag, setFlag] = useState(false);
 
-    useEffect(() => {
-        getAllDealInteractions(dealId, pageNo).then(response => {
-            if (response) {
-                setData(response.data);
-            }
-        })
-    }, [pageNo])
+  const [loading, setLoading] = useState(false);
 
-    function addInteractionToView(interaction) {
-        setData(prevState => ({
-            ...prevState,
+  const [viewAddForm, setViewAddForm] = useState(add);
+
+  useEffect(() => {
+    setDealId(route.params.dealId);
+  }, [route.params.dealId]);
+
+  const loadData = (pageNo) => {
+    setLoading(true);
+    getAllDealInteractions(dealId, pageNo).then((response) => {
+      if (!!response) {
+        if (pageNo == 0) {
+          setData(response.data);
+        } else {
+          setData((prevData) => ({
+            ...prevData,
             interactions: [
-                interaction,
-                ...prevState.interactions
-            ]
-        }));
-    }
-
-
-    const [viewAddForm, setViewAddForm] = useState(add);
-
-    const tableActions = <div className="flex">
-        <ActionButton type="add" onClick={() => setViewAddForm(true)} />
-    </div>
-
-    const DeleteInteractionButton = ({ interactionId }) => {
-        const [loading, setLoading] = useState(false);
-
-        function deleteInteraction(interactionId) {
-            setLoading(true);
-            deleteDealInteraction(interactionId).then(
-                response => {
-                    if (response) {
-                        setData(prevData => ({
-                            ...prevData,
-                            interactions: prevData.interactions.filter(interaction => interaction.id != interactionId)
-                        }))
-                    }
-                    setLoading(false);
-                }
-            )
+              ...prevData.interactions,
+              ...response.data.interactions,
+            ],
+          }));
         }
+      }
+      setLoading(false);
+    });
+  };
 
-        return (
-            <ActionButton type="delete" loading={loading} onClick={() => deleteInteraction(interactionId)} />
-        );
-    }
+  useEffect(() => {
+    loadData(pageNo);
+  }, [pageNo, dealId]);
 
+  useEffect(() => {
+    setPageNo(0);
+    loadData(0);
+  }, [flag]);
 
-    const entryActions = (interaction) => <div className="flex" >
-        <DeleteInteractionButton interactionId={interaction.id} />
-    </div>
+  function addInteractionToView(interaction) {
+    setData((prevState) => ({
+      ...prevState,
+      totalCount: prevState.totalCount + 1,
+      interactions: [interaction, ...prevState.interactions],
+    }));
+  }
 
-    return (
-        <div className="flex flex-col gap-8">
-            <Table
-                viewFields={viewFields}
-                pageNo={pageNo}
-                setPageNo={setPageNo}
-                totalEntries={data.totalCount}
-                totalPages={data.totalPageCount}
-                entriesList={data.interactions}
-                title="Deal Interactions"
-                tableActions={tableActions}
-                entryActions={entryActions}
+  return (
+    <ScrollView className="flex">
+      <View className="flex space-y-4 p-4">
+        {/* back button */}
+        <GoBackButton navigation={navigation} />
+
+        {/* section header */}
+        <SectionHeader
+          title="Deal Interactions"
+          totalCount={data.totalCount}
+          actions={[
+            <ActionButton
+              type="add"
+              onClick={() => setViewAddForm((f) => !f)}
+            />,
+            <ActionButton
+              type="reload"
+              loading={loading}
+              onClick={() => setFlag((f) => !f)}
+            />,
+          ]}
+        />
+
+        {/* add form */}
+        <View className="flex">
+          {viewAddForm && (
+            <AddDealInteraction
+              dealId={dealId}
+              addInteractionToView={addInteractionToView}
+              display={viewAddForm}
+              setDisplay={setViewAddForm}
+              style={style}
             />
-            {viewAddForm && <AddDealInteraction dealId={dealId} addInteractionToView={addInteractionToView} display={viewAddForm} setDisplay={setViewAddForm} />}
-        </div>
-    );
+          )}
+        </View>
 
+        {/* enteries list*/}
+        <View className="flex">
+          {data.interactions.length > 0 && (
+            <View className="flex space-y-4">
+              {data.interactions.map((interaction) => (
+                <InteractionCard interaction={interaction} />
+              ))}
+            </View>
+          )}
+        </View>
 
-}
+        <View>
+          {pageNo + 1 < data.totalPageCount && (
+            <SubmitButton2
+              loading={loading}
+              onClick={() => {
+                setPageNo((prev) =>
+                  prev + 1 < data.totalPageCount ? prev + 1 : prev
+                );
+              }}
+            >
+              View More
+            </SubmitButton2>
+          )}
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
 
 export default DealInteractions;

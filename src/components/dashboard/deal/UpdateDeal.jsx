@@ -13,7 +13,7 @@ import DealAttachments from "../deal-attachment/DealAttachments";
 import ActionButton from "../../../components/button/ActionButton";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import NativeTextInput from "../../input/NativeTextInput";
-import { LeftArrow, User } from "../../../svgIcons";
+import { LeftArrow, Meeting, User } from "../../../svgIcons";
 import colors from "tailwindcss/colors";
 import FormTitle from "../../FormTitle";
 import MenuButton from "../MenuButton";
@@ -149,6 +149,14 @@ const UpdateDeal = ({ navigation, route }) => {
               Icon={User}
               title1="Deal"
               title2="Consultants"
+            />
+            <MenuButton
+              onPress={() =>
+                navigation.jumpTo("dealInteractions", { dealId: dealId })
+              }
+              Icon={Meeting}
+              title1="Deal"
+              title2="Interactions"
             />
             {/* 
                         <DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />

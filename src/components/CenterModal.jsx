@@ -3,11 +3,11 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View, Button, TouchableOpaci
 import colors from "tailwindcss/colors";
 import { Close } from "../svgIcons";
 
-const BottomModal = ({modalVisible, setModalVisible, children, closeable}) => {
+const CenterModal = ({modalVisible, setModalVisible, children, closeable}) => {
 
   return (
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -16,7 +16,8 @@ const BottomModal = ({modalVisible, setModalVisible, children, closeable}) => {
           }
         }}
       >
-        <View className="flex w-full rounded-t-xl bg-gray-100 absolute bottom-0 items-center">
+        <View className="flex relative flex-1 bg-gray-900/50 items-center justify-center px-4">
+        <View className="flex w-full rounded-xl bg-gray-100 items-center">
           {
             closeable &&
         <TouchableOpacity onPress={() => setModalVisible(false)} className="bg-gray-200 w-8 h-8">
@@ -26,6 +27,8 @@ const BottomModal = ({modalVisible, setModalVisible, children, closeable}) => {
           <View className="w-full flex">
             {children}
           </View>
+        </View>
+
         </View>
 
       </Modal>
@@ -76,4 +79,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default BottomModal;
+export default CenterModal;

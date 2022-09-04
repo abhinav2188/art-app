@@ -1,12 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import AddParty from "../components/dashboard/AddParty";
-import { DashboardMenu } from "../components/dashboard/DashboardMenu";
 import DealConsultants from "../components/dashboard/deal-consultants/DealConsultants";
 import DealContacts from "../components/dashboard/deal-contacts/DealContacts";
-import AddDeal from "../components/dashboard/deal/AddDeal";
+import DealInteractions from "../components/dashboard/deal-interactions/DealInteractions";
 import UpdateDeal from "../components/dashboard/deal/UpdateDeal";
-import ViewDeals from "../components/dashboard/deal/ViewDeals";
 
 export const DealScreen = ({route}) => {
 
@@ -18,6 +15,7 @@ export const DealScreen = ({route}) => {
       <DealNavigator.Screen name="deal" component={UpdateDeal}/>
       <DealNavigator.Screen name="dealContacts" component={DealContacts} />
       <DealNavigator.Screen name="dealConsultants" component={DealConsultants} />
+      <DealNavigator.Screen name="dealInteractions" component={DealInteractions} />
     </DealNavigator.Navigator>
   );
 };

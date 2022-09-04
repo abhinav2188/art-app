@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Form from "../../../components/Form";
+import { requiredValidation } from "../../../inputValidations";
 import { addDealInteraction } from "../../../services/dealInteractionsService";
 import { getDropdownValues } from "../../../services/dropdownService";
+import Form from "../../Form";
 
 const formName = "DEAL_INTERACTIONS";
 
@@ -18,43 +19,47 @@ const formFields = [
     {
         label: "Meeting Date",
         name: "meetingDate",
-        type: "date"
+        type: "date",
+        isTimed: true
     },
     {
         label: "Meeting Location",
         name: "meetingLocation",
-        type: "text"
+        type: "location",
+        validateFunc:requiredValidation
+
     },
     {
         label: "Contacts",
         name: "contacts",
-        type: "dropdown",
+        type: "multi-dropdown",
         dropdownType: "MEETING_CONTACT",
-        multiple: true
+        validateFunc:requiredValidation
     },
     {
         label: "Consultants",
         name: "consultants",
-        type: "dropdown",
+        type: "multi-dropdown",
         dropdownType: "MEETING_CONSULTANT",
         multiple: true
     },
     {
         label: "Handlers",
         name: "handlers",
-        type: "dropdown",
+        type: "multi-dropdown",
         dropdownType: "MEETING_HANDLER",
-        multiple: true
+        validateFunc:requiredValidation
     },
     {
         label: "Meeting Details",
         name: "meetingDetails",
-        type: "textArea"
+        type: "textArea",
+        validateFunc:requiredValidation
     }
 ];
 
 
-const AddDealInteraction = ({ dealId, addInteractionToView, setDisplay, reload }) => {
+const AddDealInteraction = ({ dealId, addInteractionToView, setDisplay, style }) => {
 
     const [formData, setFormData] = useState(initialData);
 
@@ -70,6 +75,10 @@ const AddDealInteraction = ({ dealId, addInteractionToView, setDisplay, reload }
         }
     });
 
+    const [errors, setErrors] = useState(initialData);
+    
+    const [loading, setLoading] = useState(false);
+
     const [flag, setFlag] = useState(true);
 
     const reloadDropdown = () => setFlag(f => !f);
@@ -77,14 +86,13 @@ const AddDealInteraction = ({ dealId, addInteractionToView, setDisplay, reload }
     useEffect(() => {
         getDropdownValues(null, formName, dealId).then(
             response => {
-                if (response) {
+                if (!!response) {
                     setDropdowns(response.dropdownKeyDetailsMap)
                 }
             }
         )
     }, [flag])
 
-    const [loading, setLoading] = useState(false);
 
     const handleSubmit = () => {
         setLoading(true);
@@ -111,6 +119,10 @@ const AddDealInteraction = ({ dealId, addInteractionToView, setDisplay, reload }
             onSubmit={handleSubmit}
             loading={loading}
             reloadDropdown={reloadDropdown}
+            errors={errors}
+            setErrors={setErrors}
+            buttonTitle="add interaction"
+            style={style}
         />
     );
 

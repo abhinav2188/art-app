@@ -1,5 +1,7 @@
 import React from "react";
 import DateInput from "./input/DateInput";
+import LocationInput from "./input/LocationInput";
+import MultipleSelectInput from "./input/MultiSelectInput";
 import NativeTextArea from "./input/NativeTextArea";
 import NativeTextInput from "./input/NativeTextInput";
 import NativeTextPassword from "./input/NativeTextPassword";
@@ -56,7 +58,21 @@ const CustomInput = ({
           style={style}
         />
       );
-    case "textArea":
+      case "multi-dropdown":
+        return (
+          <MultipleSelectInput
+            name={field.name}
+            label={field.label}
+            description={field.description}
+            optionsList={dropdowns[field.dropdownType].values}
+            value={value}
+            errorMsg={errorMsg}
+            onChange={handleChange}
+            clazzName={clazzName}
+            style={style}
+          />
+        );
+      case "textArea":
       return (
         <NativeTextArea
           name={field.name}
@@ -80,9 +96,22 @@ const CustomInput = ({
           onChange={handleChange}
           clazzName={clazzName}
           style={style}
+          isTimed={field.isTimed}
         />
       );
-  }
+      case "location":
+        return (
+          <LocationInput
+            {...field}
+            value={value}
+            errorMsg={errorMsg}
+            onChange={handleChange}
+            clazzName={clazzName}
+            style={style}
+          />
+        );
+
+    }
 };
 
 export default CustomInput;
