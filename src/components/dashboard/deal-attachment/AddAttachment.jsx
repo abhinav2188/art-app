@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import Form from "../../../components/Form";
 import { addDealAttachment } from "../../../services/attachmentService";
+import Form from "../../Form";
 
 const formFields = [
     {
-        label: "File",
+        label: "Image File",
         name: "file",
-        type: "file",
-        accept: "image/*"
+        type: "image"
     }
 ]
 
@@ -21,10 +20,19 @@ const AddAttachment = ({ dealId, addAttachmentToView, setDisplay }) => {
 
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = () => {
         // event.preventDefault();
         const formDataa = new FormData();
-        formDataa.append("file", formData.file);
+        // data.append('photo', {
+        //     name: photo.fileName,
+        //     type: photo.type,
+        //     uri: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri,
+        //   });        
+          formDataa.append("file", {
+            name: 'D'+dealId+'attachment',
+            type: formData.file.type,
+            uri: formData.file.uri,
+          });
         setLoading(true);
         addDealAttachment(dealId, formDataa).then(
             response => {
@@ -36,7 +44,10 @@ const AddAttachment = ({ dealId, addAttachmentToView, setDisplay }) => {
                 setDisplay(false);
                 setLoading(false);
             }
-        )
+        ).catch(error => {
+            console.log("error saving file",JSON.stringify(error));
+            setLoading(false);
+        })
     }
 
     return (

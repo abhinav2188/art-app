@@ -158,12 +158,10 @@ const UpdateDeal = ({ navigation, route }) => {
               title1="Deal"
               title2="Interactions"
             />
+              <DealAttachments dealId={dealId} /> 
             {/* 
                         <DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />
-                        <DealContacts dealId={dealId} />
-                        <DealConsultants dealId={dealId} />
-                        <DealInteractions dealId={dealId} />
-                        <DealAttachments dealId={dealId} /> */}
+                        */}
           </View>
         ) : (
           <View className="flex flex-col">

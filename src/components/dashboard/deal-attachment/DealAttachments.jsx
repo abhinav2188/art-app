@@ -1,11 +1,12 @@
 
 import React, { useEffect, useState } from "react";
-import ActionButton from "../../../components/button/ActionButton";
+import { Text, View } from "react-native";
 import { getAllDealAttachments } from "../../../services/attachmentService";
+import ActionButton from "../../button/ActionButton";
 import AddAttachment from "./AddAttachment";
 import DeleteAttachment from "./DeleteAttachment";
 
-const DealAttachments = ({ dealId }) => {
+const DealAttachments = ({ dealId , style}) => {
 
     const [data, setData] = useState({
         totalCount: 0,
@@ -40,32 +41,36 @@ const DealAttachments = ({ dealId }) => {
     const [viewAddForm, setViewAddForm] = useState(false);
 
     return (
-        <div className="flex flex-col gap-8 border rounded-xl px-2">
-            <div className="flex flex-col">
-                <div className="flex justify-between border-b items-center py-1">
-                    <h3>Deal Attachments</h3>
+        <View className="flex flex-col space-y-4 border rounded-xl px-2" style={style}>
+            <View className="flex flex-col">
+                <View className="flex flex-row justify-between border-b items-center py-1">
+                    <Text>Deal Attachments</Text>
                     <ActionButton type="add" onClick={() => setViewAddForm(true)} />
-                </div>
-                <div className="flex flex-wrap gap-2 py-4">
+                </View>
+                <View className="flex flex-row flex-wrap gap-2 py-4">
                     {
                         data.attachments.map(attachment =>
-                            <div className="border rounded-lg flex items-center">
-                                <span className="px-2">
-                                    <a className="text-sm text-sky-600" href={attachment.path} target="_blank">{attachment.documentName}</a>
-                                </span>
-                                <DeleteAttachment attachment={attachment} dealId={dealId}
-                                    removeAttachmentFromView={removeAttachmentFromView} />
-                            </div>
+                            <View className="border rounded-lg flex items-center">
+                                <Text className="px-2">
+                                    {attachment.path}
+                                    {/* <a className="text-sm text-sky-600" href={attachment.path} target="_blank">{attachment.documentName}</a> */}
+                                </Text>
+                                {/* <DeleteAttachment attachment={attachment} dealId={dealId}
+                                    removeAttachmentFromView={removeAttachmentFromView} /> */}
+                            </View>
                         )
                     }
-                </div>
-            </div>
+                </View>
+            </View>
+            <View>
             {
                 viewAddForm &&
                 <AddAttachment dealId={dealId} addAttachmentToView={addAttachmentToView}
                     setDisplay={setViewAddForm} />
             }
-        </div>
+
+            </View>
+        </View>
     );
 
 }

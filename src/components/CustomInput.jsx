@@ -1,5 +1,6 @@
 import React from "react";
 import DateInput from "./input/DateInput";
+import ImageInput from "./input/ImageInput";
 import LocationInput from "./input/LocationInput";
 import MultipleSelectInput from "./input/MultiSelectInput";
 import NativeTextArea from "./input/NativeTextArea";
@@ -110,7 +111,18 @@ const CustomInput = ({
             style={style}
           />
         );
-
+        case "image":
+          return (
+            <ImageInput
+              {...field}
+              value={value}
+              errorMsg={errorMsg}
+              onChange={handleChange}
+              clazzName={clazzName}
+              style={style}
+            />
+          );
+    
     }
 };
 
