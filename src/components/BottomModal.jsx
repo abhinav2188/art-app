@@ -19,7 +19,7 @@ const BottomModal = ({modalVisible, setModalVisible, children, closeable}) => {
         <View className="flex w-full rounded-t-xl bg-gray-100 absolute bottom-0 items-center">
           {
             closeable &&
-        <TouchableOpacity onPress={() => setModalVisible(false)} className="bg-gray-200 w-8 h-8">
+        <TouchableOpacity onPress={() => setModalVisible(false)} className="bg-gray-200 w-8 h-8 self-end mr-2">
           <Close fill={colors.black}/>
           </TouchableOpacity>
           }

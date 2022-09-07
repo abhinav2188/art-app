@@ -17,6 +17,7 @@ import { LeftArrow, Meeting, User } from "../../../svgIcons";
 import colors from "tailwindcss/colors";
 import FormTitle from "../../FormTitle";
 import MenuButton from "../MenuButton";
+import GoBackButton from "../../button/GoBackButton";
 
 const initialData = {
   cardDetails: {
@@ -96,14 +97,7 @@ const UpdateDeal = ({ navigation, route }) => {
   return (
     <ScrollView className="flex">
       <View className="flex p-4 space-y-4">
-        <View>
-          <TouchableOpacity
-            className="w-8 h-8 bg-gray-400 rounded-full"
-            onPress={() => navigation.goBack()}
-          >
-            <LeftArrow fill={colors.sky[800]} />
-          </TouchableOpacity>
-        </View>
+        <GoBackButton navigation={navigation}/>
         <NativeTextInput
           value={dealId}
           label="deal id"
@@ -117,22 +111,6 @@ const UpdateDeal = ({ navigation, route }) => {
               setDealDetails={setDealDetails}
               data={dealDetails.cardDetails}
               reloadDealButton={ReloadDealButton}
-            />
-            {/* <DealQuery dealId={dealId} /> */}
-            <DealSection2
-              dealId={dealId}
-              setDealDetails={setDealDetails}
-              data={dealDetails.productDetails}
-            />
-            <DealSection3
-              dealId={dealId}
-              setDealDetails={setDealDetails}
-              data={dealDetails.commonDetails}
-            />
-            <DealSection4
-              dealId={dealId}
-              setDealDetails={setDealDetails}
-              data={dealDetails.additionalDetails}
             />
             <MenuButton
               onPress={() =>
@@ -157,6 +135,23 @@ const UpdateDeal = ({ navigation, route }) => {
               Icon={Meeting}
               title1="Deal"
               title2="Interactions"
+            />
+              <DealQuery dealId={dealId} />
+            {/* <DealQuery dealId={dealId} /> */}
+            <DealSection2
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.productDetails}
+            />
+            <DealSection3
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.commonDetails}
+            />
+            <DealSection4
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.additionalDetails}
             />
               <DealAttachments dealId={dealId} /> 
             {/* 

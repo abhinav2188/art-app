@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Text, TouchableHighlight, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import colors from "tailwindcss/colors";
 import UserContext from "../context/UserContext";
 import { localStorage } from "../localStorage";
@@ -27,9 +27,9 @@ const ProfileScreen = ({navigation}) => {
                 userContext.user &&
                 <View className="flex flex-row items-center justify-between">
                     <Text>{userContext.user.email}</Text>
-                    <TouchableHighlight className="w-6 h-6" onPress={logout}>
+                    <TouchableOpacity className="w-6 h-6" onPress={logout}>
                         <Logout fill={colors.red[800]}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     </View>
             }
             </View>
