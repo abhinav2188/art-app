@@ -1,78 +1,80 @@
-
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Button, Image, Text, View } from "react-native";
 import { getAllDealAttachments } from "../../../services/attachmentService";
 import ActionButton from "../../button/ActionButton";
+import SectionHeader from "../../SectionHeader";
 import AddAttachment from "./AddAttachment";
-import DeleteAttachment from "./DeleteAttachment";
+import ImageView from "react-native-image-viewing";
+import ImageGallery from "../../ImageGallery";
 
-const DealAttachments = ({ dealId , style}) => {
+const DealAttachments = ({ dealId, style }) => {
 
     const [data, setData] = useState({
-        totalCount: 0,
-        attachments: []
+    totalCount: 0,
+    attachments: [],
+  });
+
+  const [images,setImages] = useState([]);
+  
+  const [flag, setFlag] = useState(false);
+  
+  const [loading, setLoading] = useState(false);
+  
+  const [viewAddForm, setViewAddForm] = useState(false);
+  
+  // fn to load data
+  useEffect(() => {
+    setLoading(true);
+    getAllDealAttachments(dealId).then((response) => {
+      if (response) {
+        setData(response.data);
+      }
+      setLoading(false);
     });
+  }, [dealId, flag]);
 
-    useEffect(() => {
-        getAllDealAttachments(dealId).then(response => {
-            if (response) {
-                setData(response.data);
-            }
-        })
-    }, [dealId])
+  // data to images format for ImageViewer
+  useEffect(()=>{
+    let uris = data.attachments.map(attachment => ({
+        uri:attachment.path
+    }));
+    setImages(uris);
+  },[data])
 
-    function addAttachmentToView(attachment) {
-        setData(prevState => ({
-            ...prevState,
-            attachments: [
-                attachment,
-                ...prevState.attachments
-            ]
-        }));
-    }
+  function addAttachmentToView(attachment) {
+    setData((prevState) => ({
+      ...prevState,
+      totalCount:prevState.totalCount+1,
+      attachments: [attachment, ...prevState.attachments],
+    }));
+  }
 
-    function removeAttachmentFromView(attachmentId) {
-        setData(prevState => ({
-            ...prevState,
-            attachments: prevState.attachments.filter(att => att.id != attachmentId)
-        }));
-    }
 
-    const [viewAddForm, setViewAddForm] = useState(false);
-
-    return (
-        <View className="flex flex-col space-y-4 border rounded-xl px-2" style={style}>
-            <View className="flex flex-col">
-                <View className="flex flex-row justify-between border-b items-center py-1">
-                    <Text>Deal Attachments</Text>
-                    <ActionButton type="add" onClick={() => setViewAddForm(true)} />
-                </View>
-                <View className="flex flex-row flex-wrap gap-2 py-4">
-                    {
-                        data.attachments.map(attachment =>
-                            <View className="border rounded-lg flex items-center">
-                                <Text className="px-2">
-                                    {attachment.path}
-                                    {/* <a className="text-sm text-sky-600" href={attachment.path} target="_blank">{attachment.documentName}</a> */}
-                                </Text>
-                                {/* <DeleteAttachment attachment={attachment} dealId={dealId}
-                                    removeAttachmentFromView={removeAttachmentFromView} /> */}
-                            </View>
-                        )
-                    }
-                </View>
-            </View>
-            <View>
-            {
-                viewAddForm &&
-                <AddAttachment dealId={dealId} addAttachmentToView={addAttachmentToView}
-                    setDisplay={setViewAddForm} />
-            }
-
-            </View>
-        </View>
-    );
-
-}
+  return (
+    <View
+      className="flex flex-col space-y-4"
+      style={style}
+    >
+        <SectionHeader title="Attachments" totalCount={data.totalCount} actions={[
+            <ActionButton type="add" onClick={() => setViewAddForm(f=>!f)} />,
+            <ActionButton
+              type="reload"
+              loading={loading}
+              onClick={() => setFlag((f) => !f)}
+            />,
+        ]}/>
+        <ImageGallery images={images} />
+      <View>
+        {viewAddForm && (
+          <AddAttachment
+            dealId={dealId}
+            addAttachmentToView={addAttachmentToView}
+            setDisplay={setViewAddForm}
+          />
+        )}
+      </View>
+    </View>
+  );
+};
 
 export default DealAttachments;

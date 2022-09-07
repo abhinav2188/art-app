@@ -3,7 +3,13 @@ import instance from "../axiosInstance";
 export async function addDealAttachment(dealId, formData) {
     console.log("addDealAttachment()");
     const path = "/ext/" + dealId + "/docs";
-    return instance.post(path, formData).then(
+    return instance.post(path, formData,{
+        headers:{
+            post:{
+                "Content-Type":"multipart/form-data"
+            }
+        }
+    }).then(
         response => {
             console.log("response data:", response.data);
             alert(response.data.responseMsg);

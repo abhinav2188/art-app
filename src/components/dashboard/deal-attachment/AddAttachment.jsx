@@ -28,11 +28,14 @@ const AddAttachment = ({ dealId, addAttachmentToView, setDisplay }) => {
         //     type: photo.type,
         //     uri: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri,
         //   });        
-          formDataa.append("file", {
-            name: 'D'+dealId+'attachment',
-            type: formData.file.type,
-            uri: formData.file.uri,
-          });
+        //   formDataa.append("file", {
+        //     name: 'D'+dealId+'attachment',
+        //     type: formData.file.type,
+        //     uri: formData.file.uri,
+        //   });
+        console.log("formData.file",formData.file);
+        formDataa.append('name',"abhinav");
+        formDataa.append('file',formData.file);
         setLoading(true);
         addDealAttachment(dealId, formDataa).then(
             response => {
