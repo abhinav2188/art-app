@@ -4,11 +4,9 @@ import { TabActions, useLinkProps } from "@react-navigation/native";
 import React, { useContext, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import colors from "tailwindcss/colors";
-import ViewDeals from "../components/dashboard/deal/ViewDeals";
 import UserContext from "../context/UserContext";
 import { Document, Home, User } from "../svgIcons";
 import { DashboardScreen } from "./DashboardScreen";
-import { DealScreen } from "./DealScreen";
 import { MyDealsScreen } from "./MyDealsScreen";
 import ProfileScreen from "./ProfileScreen";
 

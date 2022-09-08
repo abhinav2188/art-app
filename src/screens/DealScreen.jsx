@@ -3,14 +3,14 @@ import React from "react";
 import DealConsultants from "../components/dashboard/deal-consultants/DealConsultants";
 import DealContacts from "../components/dashboard/deal-contacts/DealContacts";
 import DealInteractions from "../components/dashboard/deal-interactions/DealInteractions";
-import UpdateDeal from "../components/dashboard/deal/UpdateDeal";
+import UpdateDeal from "../components/dashboard/UpdateDeal";
 
 export const DealScreen = ({route}) => {
 
   const DealNavigator = createBottomTabNavigator();
 
   return (
-    <DealNavigator.Navigator initialRouteName="dashboardMenu" tabBar={() => <></>}
+    <DealNavigator.Navigator initialRouteName="deal" tabBar={() => <></>}
     screenOptions={{headerShown:false}}>
       <DealNavigator.Screen name="deal" component={UpdateDeal}/>
       <DealNavigator.Screen name="dealContacts" component={DealContacts} />

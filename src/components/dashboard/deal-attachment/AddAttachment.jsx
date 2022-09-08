@@ -21,20 +21,7 @@ const AddAttachment = ({ dealId, addAttachmentToView, setDisplay }) => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = () => {
-        // event.preventDefault();
         const formDataa = new FormData();
-        // data.append('photo', {
-        //     name: photo.fileName,
-        //     type: photo.type,
-        //     uri: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri,
-        //   });        
-        //   formDataa.append("file", {
-        //     name: 'D'+dealId+'attachment',
-        //     type: formData.file.type,
-        //     uri: formData.file.uri,
-        //   });
-        console.log("formData.file",formData.file);
-        formDataa.append('name',"abhinav");
         formDataa.append('file',formData.file);
         setLoading(true);
         addDealAttachment(dealId, formDataa).then(
@@ -62,7 +49,7 @@ const AddAttachment = ({ dealId, addAttachmentToView, setDisplay }) => {
             setFormData={setFormData}
             onSubmit={handleSubmit}
             loading={loading}
-            multipart
+            buttonTitle="Save image"
         />
 
     );

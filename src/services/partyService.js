@@ -1,25 +1,5 @@
 import instance from "../axiosInstance";
 
-export async function getAllParty(pageNo) {
-    console.log("getAllParty()");
-    return instance.get("/int/party/all", {
-        params: {
-            pageNo
-        }
-    }).then(
-        response => {
-            console.log("response data:", response.data);
-            return response.data.data;
-        }
-    )
-        .catch(error => {
-            console.log("error:", error);
-            console.log(error.response.data);
-            alert(error.response.data.status + ", " + error.response.data.responseMsg);
-            return null;
-        })
-}
-
 export async function postParty(data) {
     console.log("postParty()");
     const path = "/ext/party";

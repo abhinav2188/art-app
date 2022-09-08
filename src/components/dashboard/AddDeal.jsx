@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
-import DealSection1 from "./DealSection1";
-import DealSection3 from "./DealSection3";
-import DealSection2 from "./DealSection2";
-import DealSection4 from "./DealSection4";
-import DealContacts from "../deal-contacts/DealContacts";
-import DealOwners from "./DealOwners";
-import DealConsultants from "../deal-consultants/DealConsultants";
-import DealInteractions from "../deal-interactions/DealInteractions";
-import DealQuery from "../dealQuery/DealQuery";
-import DealAttachments from "../deal-attachment/DealAttachments";
+import DealSection1 from "./deal-sections/DealSection1";
+import DealSection3 from "./deal-sections/DealSection3";
+import DealSection2 from "./deal-sections/DealSection2";
+import DealSection4 from "./deal-sections/DealSection4";
 import { Text, TouchableOpacity, View } from "react-native";
-import { LeftArrow, Star } from "../../../svgIcons";
+import { LeftArrow, Meeting, Star, User } from "../../svgIcons";
 import colors from "tailwindcss/colors";
 import { ScrollView } from "react-native-gesture-handler";
-import GoBackButton from "../../button/GoBackButton";
-import MenuButton from "../MenuButton";
-import SubmitButton2 from "../../button/SubmitButton2";
+import GoBackButton from "../button/GoBackButton";
+import MenuButton from "../button/MenuButton";
+import DealQuery from "./dealQuery/DealQuery";
+import DealAttachments from "./deal-attachment/DealAttachments";
 
 const initialData = {
   cardDetails: {
@@ -78,12 +73,6 @@ const AddDeal = ({ navigation }) => {
         <View>
           <GoBackButton navigation={navigation} />
         </View>
-        <MenuButton
-          title1="add"
-          title2="new party"
-          onPress={() => navigation.navigate("addParty")}
-          Icon={Star}
-        />
         <DealSection1
           setDealId={setDealId}
           setDealDetails={setDealDetails}
@@ -110,9 +99,40 @@ const AddDeal = ({ navigation }) => {
               data={dealDetails.additionalDetails}
               edit
             />
-          </View>
+            <MenuButton
+              onPress={() =>
+                navigation.jumpTo("dealContacts", { dealId: dealId })
+              }
+              Icon={User}
+              title1="Deal"
+              title2="Contacts"
+            />
+            <MenuButton
+              onPress={() =>
+                navigation.jumpTo("dealConsultants", { dealId: dealId })
+              }
+              Icon={User}
+              title1="Deal"
+              title2="Consultants"
+            />
+            <MenuButton
+              onPress={() =>
+                navigation.jumpTo("dealInteractions", { dealId: dealId })
+              }
+              Icon={Meeting}
+              title1="Deal"
+              title2="Interactions"
+            />
+            <DealQuery dealId={dealId} />
+            <DealAttachments dealId={dealId} />          
+            </View>
         ) : (
-          <Text></Text>
+          <MenuButton
+          title1="add"
+          title2="new party"
+          onPress={() => navigation.navigate("addParty")}
+          Icon={Star}
+        />
         )}
       </View>
     </ScrollView>

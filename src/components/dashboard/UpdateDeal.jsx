@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getDeal } from "../../../services/dealService";
-import DealContacts from "../deal-contacts/DealContacts";
-import DealSection2 from "./DealSection2";
-import DealSection1 from "./DealSection1";
-import DealSection3 from "./DealSection3";
-import DealSection4 from "./DealSection4";
-import DealOwners from "./DealOwners";
-import DealConsultants from "../deal-consultants/DealConsultants";
-import DealInteractions from "../deal-interactions/DealInteractions";
-import DealQuery from "../dealQuery/DealQuery";
-import DealAttachments from "../deal-attachment/DealAttachments";
-import ActionButton from "../../../components/button/ActionButton";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import NativeTextInput from "../../input/NativeTextInput";
-import { LeftArrow, Meeting, User } from "../../../svgIcons";
-import colors from "tailwindcss/colors";
-import FormTitle from "../../FormTitle";
-import MenuButton from "../MenuButton";
-import GoBackButton from "../../button/GoBackButton";
+import DealQuery from "./dealQuery/DealQuery";
+import DealAttachments from "./deal-attachment/DealAttachments";
+import ActionButton from "../../components/button/ActionButton";
+import { ScrollView, Text, View } from "react-native";
+import NativeTextInput from "../input/NativeTextInput";
+import { Meeting, User } from "../../svgIcons";
+import { getDeal } from "../../services/dealService";
+import GoBackButton from "../button/GoBackButton";
+import MenuButton from "../button/MenuButton";
+import DealSection1 from "./deal-sections/DealSection1";
+import DealSection2 from "./deal-sections/DealSection2";
+import DealSection3 from "./deal-sections/DealSection3";
+import DealSection4 from "./deal-sections/DealSection4";
 
 const initialData = {
   cardDetails: {
@@ -97,7 +91,7 @@ const UpdateDeal = ({ navigation, route }) => {
   return (
     <ScrollView className="flex">
       <View className="flex p-4 space-y-4">
-        <GoBackButton navigation={navigation}/>
+        <GoBackButton navigation={navigation} />
         <NativeTextInput
           value={dealId}
           label="deal id"
@@ -136,8 +130,7 @@ const UpdateDeal = ({ navigation, route }) => {
               title1="Deal"
               title2="Interactions"
             />
-              <DealQuery dealId={dealId} />
-            {/* <DealQuery dealId={dealId} /> */}
+            <DealQuery dealId={dealId} />
             <DealSection2
               dealId={dealId}
               setDealDetails={setDealDetails}
@@ -153,14 +146,11 @@ const UpdateDeal = ({ navigation, route }) => {
               setDealDetails={setDealDetails}
               data={dealDetails.additionalDetails}
             />
-              <DealAttachments dealId={dealId} /> 
-            {/* 
-                        <DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />
-                        */}
+            <DealAttachments dealId={dealId} />
           </View>
         ) : (
           <View className="flex flex-col">
-            <Text>Select a deal from view section</Text>
+            <Text>Select a deal from list</Text>
           </View>
         )}
       </View>

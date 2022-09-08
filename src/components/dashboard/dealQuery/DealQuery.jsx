@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Attachment, Info } from "../../../svgIcons";
+import { Info } from "../../../svgIcons";
 import BottomModal from "../../BottomModal";
-import SubmitButton from "../../button/SubmitButton";
-import MenuButton from "../MenuButton";
+import MenuButton from "../../button/MenuButton";
 import AddDealQuery from "./AddDealQuery";
 
 const DealQuery = ({ dealId, style }) => {
