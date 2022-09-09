@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Image, Modal, Text, View } from "react-native";
+import { Image, View } from "react-native";
 import BottomModal from "../components/BottomModal";
 import Login from "./Login";
 import Register from "./Register";
 import logo from "../../assets/icon.png"
 import UserContext from "../context/UserContext";
-import { localStorage } from "../localStorage";
 
 function LogScreen({navigation}) {
   
@@ -32,7 +31,7 @@ const [viewLogin, setViewLogin] = useState(true);
   }
 
   return (
-    <View className="flex-1 flex bg-white">
+    <View className="flex-1 flex bg-sky-800">
       <Image source={logo} className="w-24 h-24 self-center rounded-lg mt-12 shadow"/>
       <View>
         <BottomModal modalVisible={viewLogin} setModalVisible={setViewLogin} closeable={false}>
