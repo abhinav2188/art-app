@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
+import DealAttachments from "../components/dashboard/deal-attachment/DealAttachments";
 import DealConsultants from "../components/dashboard/deal-consultants/DealConsultants";
 import DealContacts from "../components/dashboard/deal-contacts/DealContacts";
 import DealInteractions from "../components/dashboard/deal-interactions/DealInteractions";
@@ -16,6 +17,7 @@ export const DealScreen = ({route}) => {
       <DealNavigator.Screen name="dealContacts" component={DealContacts} />
       <DealNavigator.Screen name="dealConsultants" component={DealConsultants} />
       <DealNavigator.Screen name="dealInteractions" component={DealInteractions} />
+      <DealNavigator.Screen name="dealAttachments" component={DealAttachments} />
     </DealNavigator.Navigator>
   );
 };

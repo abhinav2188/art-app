@@ -3,14 +3,11 @@ import DealSection1 from "./deal-sections/DealSection1";
 import DealSection3 from "./deal-sections/DealSection3";
 import DealSection2 from "./deal-sections/DealSection2";
 import DealSection4 from "./deal-sections/DealSection4";
-import { Text, TouchableOpacity, View } from "react-native";
-import { LeftArrow, Meeting, Star, User } from "../../svgIcons";
-import colors from "tailwindcss/colors";
-import { ScrollView } from "react-native-gesture-handler";
+import {ScrollView,  View } from "react-native";
+import { Attachment, Meeting, Star, User } from "../../svgIcons";
 import GoBackButton from "../button/GoBackButton";
 import MenuButton from "../button/MenuButton";
 import DealQuery from "./dealQuery/DealQuery";
-import DealAttachments from "./deal-attachment/DealAttachments";
 
 const initialData = {
   cardDetails: {
@@ -81,6 +78,7 @@ const AddDeal = ({ navigation }) => {
         />
         {dealId ? (
           <View className="flex flex-col space-y-4">
+            <DealQuery dealId={dealId} />
             <DealSection2
               dealId={dealId}
               setDealDetails={setDealDetails}
@@ -123,8 +121,14 @@ const AddDeal = ({ navigation }) => {
               title1="Deal"
               title2="Interactions"
             />
-            <DealQuery dealId={dealId} />
-            <DealAttachments dealId={dealId} />          
+            <MenuButton
+              onPress={() =>
+                navigation.jumpTo("dealAttachments", { dealId: dealId })
+              }
+              Icon={Attachment}
+              title1="Deal"
+              title2="Attachments"
+            />
             </View>
         ) : (
           <MenuButton
@@ -140,14 +144,3 @@ const AddDeal = ({ navigation }) => {
 };
 
 export default AddDeal;
-
-{
-  /* 
-<DealQuery dealId={dealId} /> 
-<DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />
-<DealContacts dealId={dealId} />
-<DealConsultants dealId={dealId} />
-<DealInteractions dealId={dealId} />
-<DealAttachments dealId={dealId} />
-*/
-}

@@ -4,7 +4,7 @@ import DealAttachments from "./deal-attachment/DealAttachments";
 import ActionButton from "../../components/button/ActionButton";
 import { ScrollView, Text, View } from "react-native";
 import NativeTextInput from "../input/NativeTextInput";
-import { Meeting, User } from "../../svgIcons";
+import { Attachment, Meeting, User } from "../../svgIcons";
 import { getDeal } from "../../services/dealService";
 import GoBackButton from "../button/GoBackButton";
 import MenuButton from "../button/MenuButton";
@@ -105,6 +105,22 @@ const UpdateDeal = ({ navigation, route }) => {
               setDealDetails={setDealDetails}
               data={dealDetails.cardDetails}
               reloadDealButton={ReloadDealButton}
+              />
+            <DealQuery dealId={dealId} />
+            <DealSection2
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.productDetails}
+            />
+            <DealSection3
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.commonDetails}
+            />
+            <DealSection4
+              dealId={dealId}
+              setDealDetails={setDealDetails}
+              data={dealDetails.additionalDetails}
             />
             <MenuButton
               onPress={() =>
@@ -130,23 +146,14 @@ const UpdateDeal = ({ navigation, route }) => {
               title1="Deal"
               title2="Interactions"
             />
-            <DealQuery dealId={dealId} />
-            <DealSection2
-              dealId={dealId}
-              setDealDetails={setDealDetails}
-              data={dealDetails.productDetails}
+            <MenuButton
+              onPress={() =>
+                navigation.jumpTo("dealAttachments", { dealId: dealId })
+              }
+              Icon={Attachment}
+              title1="Deal"
+              title2="Attachments"
             />
-            <DealSection3
-              dealId={dealId}
-              setDealDetails={setDealDetails}
-              data={dealDetails.commonDetails}
-            />
-            <DealSection4
-              dealId={dealId}
-              setDealDetails={setDealDetails}
-              data={dealDetails.additionalDetails}
-            />
-            <DealAttachments dealId={dealId} />
           </View>
         ) : (
           <View className="flex flex-col">
