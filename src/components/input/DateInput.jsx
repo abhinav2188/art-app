@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import InputInfo from "./InputInfo";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Calenlar, Clock } from "../../svgIcons";
@@ -14,9 +14,9 @@ const DateInput = ({
   errorMsg,
   clazzName,
   style,
-  isTimed
+  isTimed,
 }) => {
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
@@ -50,23 +50,26 @@ const DateInput = ({
         <Text className="text-sky-600 font-bold uppercase ">{label}</Text>
         <InputInfo description={description} errorMsg={errorMsg} />
       </View>
-      <View className="flex flex-row items-center border border-gray-400 rounded-lg py-3 px-2">
-      <Text className="flex flex-1">{String(value)}</Text>
-      <View className="flex flex-row gap-x-1">
-      <TouchableOpacity onPress={showDatepicker} className="flex h-6 w-6">
-        <Calenlar fill={colors.gray[400]} />
-      </TouchableOpacity>
-      {
-        !!isTimed ? ( 
-      <TouchableOpacity onPress={showTimepicker} className="flex h-6 w-6">
-        <Clock fill={colors.gray[400]} />
-      </TouchableOpacity>) : <Text></Text>
-      }
-
+      <View
+        className={`flex flex-row items-center py-2 px-2 space-x-2 justify-between border border-gray-400 rounded-lg focus:border-gray-400 focus:bg-gray-200 text-base ${
+          errorMsg && "border-red-500"
+        }`}
+      >
+        <Text className="flex-1 text-base">{String(value)}</Text>
+        <View className="flex flex-row space-x-1">
+          <TouchableOpacity onPress={showDatepicker} className="h-6 w-6">
+            <Calenlar fill={colors.gray[400]} />
+          </TouchableOpacity>
+          {!!isTimed ? (
+            <TouchableOpacity onPress={showTimepicker} className="h-6 w-6">
+              <Clock fill={colors.gray[400]} />
+            </TouchableOpacity>
+          ) : (
+            <Text></Text>
+          )}
+        </View>
       </View>
 
-      </View>
-        
       {show && (
         <DateTimePicker
           testID="dateTimePicker"

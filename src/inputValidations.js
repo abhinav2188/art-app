@@ -84,3 +84,15 @@ export const mobileValidation = (fieldName, value, setError) => {
   }
   setError(fieldName, "");
 };
+
+export const meetingDetailsValidation = (fieldName, value, setError) => {
+  if (!isPresent(value)) {
+    setError(fieldName, alertMsgs.requiredField);
+    return alertMsgs.requiredField;
+  } else if (value.length > 4000) {
+    setError(fieldName, alertMsgs.invalidMeetingDetails);
+    return alertMsgs.invalidMeetingDetails;
+  } else {
+    setError(fieldName, "");
+  }
+}

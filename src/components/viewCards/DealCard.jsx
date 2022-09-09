@@ -1,4 +1,8 @@
 import { Text, TouchableOpacity, View } from "react-native";
+import colors from "tailwindcss/colors";
+import { Document, Star } from "../../svgIcons";
+import CardRow from "./CardRow";
+import Pill from "./Pill";
 
 const DealCard = ({ data, style, onClick }) => (
   <TouchableOpacity
@@ -7,20 +11,20 @@ const DealCard = ({ data, style, onClick }) => (
     onPress={onClick}
   >
     <Text className="border-b border-gray-400">Deal#{data.dealId}</Text>
-    <View className="flex flex-row justify-between">
-      <Text className="font-bold">{data.dealName}</Text>
-      {!!data.dealStage && (
-        <Text className="px-1 rounded-full bg-sky-300 capitalize font-light">
-          {data.dealStage}
-        </Text>
-      )}
+    <View className="flex flex-row flex-wrap gap-1">
+      <Pill className="bg-sky-600">
+        stage : {!!data.dealStage ? data.dealStage : "NA"}
+      </Pill>
+      <Pill>Updated at {data.updateTimestamp}</Pill>
+      <Pill>Created at {data.createTimestamp}</Pill>
     </View>
-    <View>
-      <Text>Party : {data.partyName}</Text>
-    </View>
-    <Text className="rounded-full px-1 self-start bg-gray-400">
-      Opening Date: {data.openingDate}
-    </Text>
+
+    <CardRow Icon={Document}>
+      <Text>{data.dealName}</Text>
+    </CardRow>
+    <CardRow Icon={Star}>
+      <Text>{data.partyName}</Text>
+    </CardRow>
   </TouchableOpacity>
 );
 

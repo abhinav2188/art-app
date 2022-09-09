@@ -34,6 +34,7 @@ const LocationInput = ({
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
       Alert.alert("Permission to access location was denied");
+      setFetching(false);
       return;
     }
     let location = await Location.getCurrentPositionAsync({});
@@ -45,7 +46,7 @@ const LocationInput = ({
     console.log(JSON.stringify(response[0]));
     for (let item of response) {
       let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}, ${item.region}, ${item.country}`;
-      onChange(name,address);
+      onChange(name, address);
       break;
     }
     setFetching(false);
@@ -57,11 +58,13 @@ const LocationInput = ({
         <Text className="text-sky-600 font-bold uppercase ">{label}</Text>
         <InputInfo description={description} errorMsg={errorMsg} />
       </View>
-      <View className="flex flex-row border border-gray-400 rounded-lg py-2 px-1 justify-between items-center w-full">
+      <View
+        className={`flex flex-row items-center py-2 px-2 space-x-2 justify-between border border-gray-400 rounded-lg focus:border-gray-400 focus:bg-gray-200 text-base ${
+          errorMsg && "border-red-500"
+        }`}
+      >
         <TextInput
-          className={`focus:border-gray-400 focus:bg-gray-200 text-base w-11/12 ${
-            errorMsg && "border-red-500"
-          }`}
+          className="text-base flex-1"
           onChangeText={onChangeHandler}
           value={String(value)}
           multiline={true}
@@ -70,8 +73,11 @@ const LocationInput = ({
           {fetching ? (
             <ActivityIndicator color={colors.gray[600]} />
           ) : (
-            <TouchableOpacity onPress={fetchCurrentLocation} className="w-6 h-6">
-              <LocationIcon fill={colors.gray[400]}/>
+            <TouchableOpacity
+              onPress={fetchCurrentLocation}
+              className="w-6 h-6"
+            >
+              <LocationIcon fill={colors.gray[400]} />
             </TouchableOpacity>
           )}
         </View>

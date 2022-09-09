@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
-import colors from "tailwindcss/colors";
 import { Contact, Mail, Phone } from "../../svgIcons";
+import CardRow from "./CardRow";
+import Pill from "./Pill";
 
 const ContactCard = ({ contact, style }) => (
   <View
@@ -10,29 +11,24 @@ const ContactCard = ({ contact, style }) => (
     <Text className="border-b border-gray-400 pb-1 my-1 ">
       Contact#{contact.id}
     </Text>
-    <View className="flex flex-row gap-x-1 items-center">
-      <View className="h-5 w-5">
-        <Contact fill={colors.gray[400]} />
+    <CardRow Icon={Contact}>
+      <View className="flex flex-row items-center">
+        <Text className="flex-1">{contact.name}</Text>
+        <Pill>{contact.designation}</Pill>
       </View>
-      <Text className="flex-1">{contact.name}</Text>
-      <Text className="bg-gray-400 rounded-full px-1 uppercase">
-        {contact.designation}
-      </Text>
-    </View>
-    <View className="flex flex-row gap-x-1 items-center">
-      <View className="h-5 w-5">
-        <Mail fill={colors.gray[400]} />
+    </CardRow>
+    <CardRow Icon={Mail}>
+      <View className="flex flex-row items-center">
+        <Text>{contact.email1}</Text>
+        <Text>{contact.email2}</Text>
       </View>
-      <Text>{contact.email1}</Text>
-      <Text>{contact.email2}</Text>
-    </View>
-    <View className="flex flex-row gap-x-1">
-      <View className="h-5 w-5">
-        <Phone fill={colors.gray[400]} />
+    </CardRow>
+    <CardRow Icon={Phone}>
+      <View className="flex flex-row items-center">
+        <Text>{contact.mobile1}</Text>
+        <Text>{contact.mobile2}</Text>
       </View>
-      <Text>{contact.mobile1}</Text>
-      <Text>{contact.mobile2}</Text>
-    </View>
+    </CardRow>
   </View>
 );
 

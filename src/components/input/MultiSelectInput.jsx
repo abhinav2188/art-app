@@ -53,11 +53,11 @@ const MultipleSelectInput = ({
         <InputInfo description={description} errorMsg={errorMsg} />
       </View>
       <View
-        className={`flex flex-row items-center py-2 px-2 justify-between border border-gray-400 rounded-lg focus:border-gray-400 focus:bg-gray-200 text-base ${
+        className={`flex flex-row items-center py-2 px-2  justify-between border border-gray-400 rounded-lg focus:border-gray-400 focus:bg-gray-200 text-base ${
           errorMsg && "border-red-500"
         }`}
       >
-          <Text className="w-11/12">{value}</Text>
+        <Text className="flex-1">{String(value)}</Text>
         <TouchableOpacity
           onPress={() => setShowModal(true)}
           className="w-6 h-6"
@@ -71,29 +71,28 @@ const MultipleSelectInput = ({
         closeable
       >
         <View className="flex p-4 rounded-t-xl">
-        <MultiSelect
-          hideTags
-          items={options}
-          uniqueKey="value"
-          displayKey="label"
-          onSelectedItemsChange={handleSelectChange}
-          selectedItems={selectedOptions}
-          selectText="Select Items"
-          //   searchInputPlaceholderText="Search Items..."
-          //   onChangeInput={(text) => console.log(text)}
-          //   tagRemoveIconColor={colors.red[400]}
-          //   tagBorderColor={colors.sky[600]}
-          //   tagTextColor={colors.sky[600]}
-          //   selectedItemTextColor={colors.sky[600]}
-          //   selectedItemIconColor={colors.sky[600]}
-          //   itemTextColor="#000"
-          //   searchInputStyle={{ color: "#CCC" }}
-          submitButtonColor={colors.sky[800]}
-          submitButtonText="Select"
+          <MultiSelect
+            hideTags
+            items={options}
+            uniqueKey="value"
+            displayKey="label"
+            onSelectedItemsChange={handleSelectChange}
+            selectedItems={selectedOptions}
+            selectText="Select Items"
+            //   searchInputPlaceholderText="Search Items..."
+            //   onChangeInput={(text) => console.log(text)}
+            //   tagRemoveIconColor={colors.red[400]}
+            //   tagBorderColor={colors.sky[600]}
+            //   tagTextColor={colors.sky[600]}
+            //   selectedItemTextColor={colors.sky[600]}
+            //   selectedItemIconColor={colors.sky[600]}
+            //   itemTextColor="#000"
+            //   searchInputStyle={{ color: "#CCC" }}
+            submitButtonColor={colors.sky[800]}
+            submitButtonText="Select"
           />
-          </View>
+        </View>
       </CenterModal>
-
     </View>
   );
 };
