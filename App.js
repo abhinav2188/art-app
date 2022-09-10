@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import MyAppsProviders from "./src/MyAppProviders";
 import LogScreen from "./src/screens/LogScreen";
 import HomeNavigator from "./src/screens/HomeNaivgator";
@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <MyAppsProviders>
-      <View className="flex-1 pt-10">
+      <View className="flex-1 pt-8 bg-gray-100">
         <StatusBar style="auto" />
         <NavigationContainer>
           <Stack.Navigator
