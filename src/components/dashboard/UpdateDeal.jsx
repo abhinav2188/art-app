@@ -38,6 +38,7 @@ const initialData = {
     cateredByVertical: "",
     paymentType: "",
     openingDate: "",
+    nfud: "",
     expectedCloseDate: "",
     actualCloseDate: "",
     expectedNumberOfDays: "",
@@ -64,15 +65,13 @@ const initialData = {
 };
 
 const UpdateDeal = ({ navigation, route }) => {
+  const [dealId, setDealId] = useState(route.params.dealId);
+
   const [dealDetails, setDealDetails] = useState(initialData);
 
-  let [flag, setFlag] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const ReloadDealButton = (
-    <ActionButton type="reload" onClick={() => setFlag((f) => !f)} />
-  );
-
-  const [dealId, setDealId] = useState(route.params.dealId);
+  const [flag, setFlag] = useState(true);
 
   useEffect(() => {
     setDealId(route.params.dealId);
@@ -81,12 +80,22 @@ const UpdateDeal = ({ navigation, route }) => {
   useEffect(() => {
     console.log(flag);
     if (!dealId) return;
+    setLoading(true);
     getDeal(dealId).then((response) => {
       if (response) {
         setDealDetails(response.data);
       }
+      setLoading(false);
     });
   }, [dealId, flag]);
+
+  const ReloadDealButton = (
+    <ActionButton
+      type="reload"
+      loading={loading}
+      onClick={() => setFlag((f) => !f)}
+    />
+  );
 
   return (
     <ScrollView className="flex">
@@ -102,10 +111,11 @@ const UpdateDeal = ({ navigation, route }) => {
         {dealId ? (
           <View className="flex flex-col space-y-4">
             <DealSection1
+              dealId={dealId}
               setDealDetails={setDealDetails}
               data={dealDetails.cardDetails}
               reloadDealButton={ReloadDealButton}
-              />
+            />
             <DealQuery dealId={dealId} />
             <DealSection2
               dealId={dealId}

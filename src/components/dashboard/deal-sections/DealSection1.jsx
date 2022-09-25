@@ -9,109 +9,122 @@ import ViewDetails from "../../ViewDetails";
 const formName = "PARTY_DEAL";
 
 const formFields = [
-    {
-        label: "Party Name",
-        name: "partyName",
-        type: "dropdown",
-        dropdownType: "PARTY",
-        validateFunc: requiredValidation
-    },
-    {
-        label: "Deal Name",
-        name: "dealName",
-        type: "text",
-        validateFunc: requiredValidation
-    }
-]
+  {
+    label: "Party Name",
+    name: "partyName",
+    type: "dropdown",
+    dropdownType: "PARTY",
+    validateFunc: requiredValidation,
+  },
+  {
+    label: "Deal Name",
+    name: "dealName",
+    type: "text",
+    validateFunc: requiredValidation,
+  },
+];
 
 const viewFields = [
-    {
-        label: "Party Name",
-        name: "partyName",
-    },
-    {
-        label: "Deal Name",
-        name: "dealName",
-    }
-]
+  {
+    label: "Party Name",
+    name: "partyName",
+  },
+  {
+    label: "Deal Name",
+    name: "dealName",
+  },
+];
 
 const initialData = {
-    partyName: "",
-    dealName: "",
-    dealId:""
+  partyName: "",
+  dealName: "",
+  dealId: "",
 };
 
-const DealSection1 = ({ setDealId, setDealDetails, data, edit, reloadDealButton, style }) => {
+const DealSection1 = ({
+  dealId,
+  setDealId,
+  setDealDetails,
+  data,
+  edit,
+  reloadDealButton,
+  style,
+}) => {
+  const [formData, setFormData] = useState(initialData);
 
-    const [formData, setFormData] = useState(initialData);
+  const [errors, setErrors] = useState(initialData);
 
-    const [errors, setErrors] = useState(initialData);
+  const [dropdowns, setDropdowns] = useState({
+    PARTY: {
+      values: [],
+    },
+  });
 
-    const [dropdowns, setDropdowns] = useState({
-        PARTY: {
-            values: []
-        }
-    });
+  const [flag, setFlag] = useState(true);
 
-    const [flag, setFlag] = useState(true);
+  const reloadDropdown = () => setFlag((f) => !f);
 
-    const reloadDropdown = () => setFlag(f => !f);
-
-    useEffect(() => {
-        getDropdownValues(null, formName, null).then(
-            response => {
-                if (response) {
-                    console.log(response.dropdownKeyDetailsMap);
-                    setDropdowns(response.dropdownKeyDetailsMap)
-                }
-            }
-        )
-    }, [flag]);
-
-    let [loading, setLoading] = useState(false);
-
-    let [editMode, setEditMode] = useState(edit);
-
-    function submitAddDealForm() {
-        setLoading(true);
-        postDeal(formData).then(response => {
-            console.log(response);
-            if (response) {
-                setDealDetails(prevState => ({
-                    ...prevState,
-                    cardDetails: response.data
-                }))
-            }
-            setLoading(false);
-            setDealId(response.data.dealId);
-            setEditMode(false);
-        })
+  useEffect(() => {
+    if (!!data) {
+      setFormData(data);
     }
+  }, [data]);
 
-    const actions = <View className="flex">
-        {reloadDealButton}
-    </View>
+  useEffect(() => {
+    getDropdownValues(null, formName, null).then((response) => {
+      if (response) {
+        console.log(response.dropdownKeyDetailsMap);
+        setDropdowns(response.dropdownKeyDetailsMap);
+      }
+    });
+  }, [flag]);
 
-    return (
+  let [loading, setLoading] = useState(false);
 
-        editMode ?
-            <Form
-                title="Create Deal"
-                fields={formFields}
-                formData={formData}
-                setFormData={setFormData}
-                dropdowns={dropdowns}
-                onSubmit={submitAddDealForm}
-                loading={loading}
-                reloadDropdown={reloadDropdown}
-                errors={errors}
-                setErrors={setErrors}
-                buttonTitle="create deal"
-                style={style}
-            />
-            :
-            <ViewDetails viewFields={viewFields} title={`Deal #${data.dealId}`} data={data} actions={actions} style={style}/>
-    );
-}
+  let [editMode, setEditMode] = useState(edit);
+
+  function submitAddDealForm() {
+    setLoading(true);
+    postDeal(formData).then((response) => {
+      console.log(response);
+      if (response) {
+        setDealDetails((prevState) => ({
+          ...prevState,
+          cardDetails: response.data,
+        }));
+      }
+      setLoading(false);
+      setDealId(response.data.dealId);
+      setEditMode(false);
+    });
+  }
+
+  const actions = <View className="flex">{reloadDealButton}</View>;
+
+  return !!!dealId ? (
+    <Form
+      title="Create Deal"
+      fields={formFields}
+      formData={formData}
+      setFormData={setFormData}
+      dropdowns={dropdowns}
+      onSubmit={submitAddDealForm}
+      loading={loading}
+      reloadDropdown={reloadDropdown}
+      errors={errors}
+      setErrors={setErrors}
+      buttonTitle="create deal"
+      style={style}
+    />
+  ) : (
+    <ViewDetails
+      viewFields={viewFields}
+      title={`Deal #${data.dealId}`}
+      data={data}
+      actions={actions}
+      style={style}
+    />
+  );
+};
 
 export default DealSection1;
