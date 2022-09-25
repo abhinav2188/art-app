@@ -3,14 +3,14 @@ import { Text, View,TouchableOpacity } from "react-native";
 import colors from "tailwindcss/colors";
 import { Document, Home, ListIcon, User } from "../svgIcons";
 
-const ScreenNavigator = (props) => {
+const HomeNavBar = (props) => {
 
     console.log(props);
 
     const {navigation} = props;
 
   return (
-    <View className="flex flex-col px-4 my-2">
+    <View className="flex flex-col px-4 mt-4 mb-2">
       <View className="w-full flex flex-row px-4 py-3 bg-sky-800 justify-between items-center rounded-xl border border-gray-400">
         <View className="flex flex-row space-x-2">
         <TouchableOpacity
@@ -44,4 +44,4 @@ const ScreenNavigator = (props) => {
   );
 };
 
-export default ScreenNavigator;
+export default HomeNavBar;

@@ -16,8 +16,6 @@ const AppNavigator = () => {
   return userContext.userContextLoading ? (
     <TransitionScreen />
   ) : (
-    <View className="flex-1 pt-8 bg-gray-100">
-      <StatusBar style="auto" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -31,7 +29,6 @@ const AppNavigator = () => {
           )}
         </Stack.Navigator>
       </NavigationContainer>
-    </View>
   );
 };
 

@@ -3,8 +3,8 @@ import { Image, View } from "react-native";
 import BottomModal from "../components/BottomModal";
 import Login from "./Login";
 import Register from "./Register";
-import logo from "../../assets/icon.png";
-import UserContext from "../context/UserContext";
+import logo from "../../assets/logo.png";
+import { StatusBar } from "expo-status-bar";
 
 function LogScreen({ navigation }) {
   const [viewLogin, setViewLogin] = useState(true);
@@ -21,10 +21,12 @@ function LogScreen({ navigation }) {
   }
 
   return (
-    <View className="flex-1 flex bg-sky-800 rounded-t-2xl">
+ <View className="flex-1 flex bg-blue-art rounded-t-2xl" >
+    <StatusBar style="auto" />
       <Image
         source={logo}
-        className="w-24 h-24 self-center rounded-lg mt-12 shadow"
+        className="h-24 w-24 self-center rounded-lg mt-24 shadow"
+        resizeMode="contain"
       />
       <View>
         <BottomModal

@@ -4,14 +4,14 @@ import UserContext from "../context/UserContext";
 import { DashboardScreen } from "./DashboardScreen";
 import { MyDealsScreen } from "./MyDealsScreen";
 import ProfileScreen from "./ProfileScreen";
-import ScreenNavigator from "./ScreenNavigator";
+import HomeNavBar from "./HomeNavBar";
 
 const HomeNavigator = ({ navigation }) => {
 
   const Tab = createMaterialTopTabNavigator();
 
   return (
-    <Tab.Navigator tabBar={ScreenNavigator}>
+    <Tab.Navigator tabBar={HomeNavBar}>
       <Tab.Screen name="dashboard" component={DashboardScreen} />
       <Tab.Screen name="myDeals" component={MyDealsScreen} />
       <Tab.Screen name="profile" component={ProfileScreen} />
