@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import MultiSelect from "react-native-multiple-select";
+import { FlipInEasyX } from "react-native-reanimated";
 import colors from "tailwindcss/colors";
 import { DownArrow } from "../../svgIcons";
 import BottomModal from "../BottomModal";
@@ -17,6 +18,7 @@ const MultipleSelectInput = ({
   errorMsg,
   style,
   clazzName,
+  single
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [options, setOptions] = useState([]);
@@ -26,7 +28,7 @@ const MultipleSelectInput = ({
     setOptions(
       optionsList.map((option) => ({
         value: option.value,
-        label: option.value,
+        label: option.label,
       }))
     );
   }, [optionsList]);
@@ -70,15 +72,19 @@ const MultipleSelectInput = ({
         setModalVisible={setShowModal}
         closeable
       >
-        <View className="flex p-4 rounded-t-xl">
+        {/* <View className="flex p-4 rounded-t-xl"> */}
           <MultiSelect
-            hideTags
+            // hideTags
+            single={single}
             items={options}
             uniqueKey="value"
             displayKey="label"
             onSelectedItemsChange={handleSelectChange}
             selectedItems={selectedOptions}
             selectText="Select Items"
+            hideSubmitButton={true}
+            fixedHeight={true}
+            styleMainWrapper={{display:"flex",borderRadius:"10"}}
             //   searchInputPlaceholderText="Search Items..."
             //   onChangeInput={(text) => console.log(text)}
             //   tagRemoveIconColor={colors.red[400]}
@@ -91,7 +97,7 @@ const MultipleSelectInput = ({
             submitButtonColor={colors.sky[800]}
             submitButtonText="Select"
           />
-        </View>
+        {/* </View> */}
       </CenterModal>
     </View>
   );

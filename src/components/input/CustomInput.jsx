@@ -47,7 +47,7 @@ const CustomInput = ({
       );
     case "dropdown":
       return (
-        <SelectInput
+        <MultipleSelectInput
           name={field.name}
           label={field.label}
           description={field.description}
@@ -57,6 +57,7 @@ const CustomInput = ({
           onChange={handleChange}
           clazzName={clazzName}
           style={style}
+          single={true}
         />
       );
     case "multi-dropdown":

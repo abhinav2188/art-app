@@ -10,18 +10,20 @@ const DealQuery = ({ dealId, style }) => {
 
   return (
     <View style={style}>
-            <MenuButton
-              onPress={() => setViewAddForm(true)}
-              Icon={Info}
-              title1="Send"
-              title2="Deal Query"
-            />
+      <MenuButton
+        onPress={() => setViewAddForm(true)}
+        Icon={Info}
+        title1="Send"
+        title2="Deal Query"
+      />
       <BottomModal
         setModalVisible={setViewAddForm}
         modalVisible={viewAddForm}
         closeable
       >
-        <AddDealQuery setDisplay={setViewAddForm} dealId={dealId} />
+        <View className="px-4 py-4">
+          <AddDealQuery setDisplay={setViewAddForm} dealId={dealId} />
+        </View>
       </BottomModal>
     </View>
   );
