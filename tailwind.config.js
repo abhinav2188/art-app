@@ -5,8 +5,10 @@ module.exports = {
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-        colors: {
-            'blue-art': '#0094FE'
+        extend:{
+            colors: {
+                'blue-art': '#0094FE'
+            }
         }
     }
 };
