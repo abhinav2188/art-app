@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import colors from "tailwindcss/colors";
 import {
   emailValidation,
   mobileValidation,
-  primaryEmailValidation,
   requiredValidation,
 } from "../../inputValidations";
 import { getDropdownValues } from "../../services/dropdownService";
 import { postParty } from "../../services/partyService";
 import { Document, Done, LeftArrow } from "../../svgIcons";
 import GoBackButton from "../button/GoBackButton";
+import MenuButton from "../button/MenuButton";
 import SubmitButton2 from "../button/SubmitButton2";
 import Form from "../Form";
-import MenuButton from "./MenuButton";
 
 const formFields = [
   {
@@ -92,44 +91,44 @@ const AddParty = ({ navigation }) => {
       setFormData(initialData);
     });
   }
-  
-  const [viewForm, setViewForm]  = useState(true);
 
+  const [viewForm, setViewForm] = useState(true);
 
   return (
-    <View className="flex p-4 space-y-4">
-      <GoBackButton navigation={navigation} />
-      {
-        viewForm ? 
-        <Form
-          title="ADD New Party"
-          fields={formFields}
-          formData={formData}
-          setFormData={setFormData}
-          errors={errors}
-          setErrors={setErrors}
-          onSubmit={handleSubmit}
-          loading={loading}
-          dropdowns={dropdowns}
-          reloadDropdown={reloadDropdown}
-          className="border border-gray-400"
-        /> :
-        <View className="flex border border-gray-400 px-2 py-4 space-y-4 rounded-xl items-center">
+    <ScrollView>
+      <View className="flex p-4 space-y-4">
+        <GoBackButton navigation={navigation} />
+        {viewForm ? (
+          <Form
+            title="ADD New Party"
+            fields={formFields}
+            formData={formData}
+            setFormData={setFormData}
+            errors={errors}
+            setErrors={setErrors}
+            onSubmit={handleSubmit}
+            loading={loading}
+            dropdowns={dropdowns}
+            reloadDropdown={reloadDropdown}
+            className="border border-gray-400"
+          />
+        ) : (
+          <View className="flex border border-gray-400 px-2 py-4 space-y-4 rounded-xl items-center">
             <View className="w-24 h-24">
-            <Done fill={colors.sky[800]}/>
-
+              <Done fill={colors.sky[800]} />
             </View>
-            <SubmitButton2 onClick={()=> setViewForm(true)} className="w-full">
-                Add more
+            <SubmitButton2 onClick={() => setViewForm(true)} className="w-full">
+              Add more
             </SubmitButton2>
-            </View>
-      }
-      <MenuButton
-        title1="Add deal"
-        onPress={() => navigation.navigate("addDeal")}
-        Icon={Document}
-      />
-    </View>
+          </View>
+        )}
+        <MenuButton
+          title1="Add deal"
+          onPress={() => navigation.navigate("addDeal")}
+          Icon={Document}
+        />
+      </View>
+    </ScrollView>
   );
 };
 

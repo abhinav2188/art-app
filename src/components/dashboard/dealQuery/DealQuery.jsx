@@ -1,17 +1,32 @@
 import React, { useState } from "react";
-import SubmitButton from "../../../components/button/SubmitButton";
+import { View } from "react-native";
+import { Info } from "../../../svgIcons";
+import BottomModal from "../../BottomModal";
+import MenuButton from "../../button/MenuButton";
 import AddDealQuery from "./AddDealQuery";
 
-const DealQuery = ({ dealId }) => {
+const DealQuery = ({ dealId, style }) => {
+  const [viewAddForm, setViewAddForm] = useState(false);
 
-    const [viewAddForm, setViewAddForm] = useState(false);
-
-    return (
-        viewAddForm ?
-            <AddDealQuery setDisplay={setViewAddForm} dealId={dealId} /> :
-            <SubmitButton type="add" onClick={() => setViewAddForm(true)} >Send Query</SubmitButton>
-    );
-
-}
+  return (
+    <View style={style}>
+      <MenuButton
+        onPress={() => setViewAddForm(true)}
+        Icon={Info}
+        title1="Send"
+        title2="Deal Query"
+      />
+      <BottomModal
+        setModalVisible={setViewAddForm}
+        modalVisible={viewAddForm}
+        closeable
+      >
+        <View className="px-4 py-4">
+          <AddDealQuery setDisplay={setViewAddForm} dealId={dealId} />
+        </View>
+      </BottomModal>
+    </View>
+  );
+};
 
 export default DealQuery;

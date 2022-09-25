@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { requiredValidation } from "../../../inputValidations";
+import { meetingDetailsValidation, requiredValidation } from "../../../inputValidations";
 import { addDealInteraction } from "../../../services/dealInteractionsService";
 import { getDropdownValues } from "../../../services/dropdownService";
 import Form from "../../Form";
@@ -54,7 +54,7 @@ const formFields = [
         label: "Meeting Details",
         name: "meetingDetails",
         type: "textArea",
-        validateFunc:requiredValidation
+        validateFunc:meetingDetailsValidation
     }
 ];
 

@@ -1,10 +1,12 @@
 import axios from "axios";
 import { localStorage } from "./localStorage";
+import {API_URL} from "@env";
 
 let instance = axios.create({
-    baseURL: "http://192.168.1.6:8082/api" 
+    baseURL: `${API_URL}`
 });
 // baseURL: "http://art-dts.herokuapp.com/api" ,    
+// API_URL=http://192.168.1.6:8082/api
 
 instance.interceptors.request.use(
     async (req) => {

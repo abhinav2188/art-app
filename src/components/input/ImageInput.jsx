@@ -1,16 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import * as ImagePicker from 'expo-image-picker';
-import {
-  ActivityIndicator,
-  Alert,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Calenlar, LocationIcon, User } from "../../svgIcons";
+import React, { useState, useEffect } from "react";
+import * as ImagePicker from "expo-image-picker";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { CameraIcon, GalleryIcon } from "../../svgIcons";
 import InputInfo from "./InputInfo";
-import * as Location from "expo-location";
 import colors from "tailwindcss/colors";
 
 const ImageInput = ({
@@ -23,43 +15,55 @@ const ImageInput = ({
   clazzName,
   style,
 }) => {
-
-function onChangeHandler(newVal) {
-    onChange(name, newVal);
-  }
-
   const [image, setImage] = useState(null);
   const [fetching, setFetching] = useState(false);
 
-  function _base64ToArrayBuffer(base64) {
-    var binary_string = window.atob(base64);
-    var len = binary_string.length;
-    var bytes = new Uint8Array(len);
-    for (var i = 0; i < len; i++) {
-        bytes[i] = binary_string.charCodeAt(i);
+  const pickImage = async (mode) => {
+    setFetching(true);
+
+    // fetch image using camera or gallery
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
     }
-    return bytes.buffer;
-}
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    setFetching(true);  
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      base64: true,
-      allowsEditing: true,
-    });
+    
+    let result = null;
+    if (mode == "gallery") {
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+      });
+    } else {
+        let cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
+        console.log(cameraPermission);
+        if (cameraPermission.granted === false) {
+          alert("Permission to access camera is required!");
+          setFetching(false);
+          return;
+        }
+        try{
+          result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true            
+          });
+        }catch{
+          error => console.error(error);
+        }
+        console.log(result);
+      // }catch{
+      //   error => console.error(error);
+      // };
+    }
 
-    // const file = _base64ToArrayBuffer(result.base64);
-    onChange(name, result);
-    console.log(result);
-    console.log(result.base64);
-
-    if (!result.cancelled) {
+    // set image to formData, view
+    if (!!result && !result.cancelled) {
       setImage(result.uri);
+      onChange(name, result);
     }
+
     setFetching(false);
   };
-
 
   return (
     <View className={`flex flex-col ${clazzName}`} style={style}>
@@ -67,18 +71,33 @@ function onChangeHandler(newVal) {
         <Text className="text-sky-600 font-bold uppercase ">{label}</Text>
         <InputInfo description={description} errorMsg={errorMsg} />
       </View>
-      <View className="flex flex-row border border-gray-400 rounded-lg py-2 px-1 justify-between items-center w-full">
-        <Text className="w-11/12">{image}</Text>
+      <View
+        className={`flex flex-row items-center py-3 px-2 space-x-2 justify-between border border-gray-400 rounded-lg focus:border-gray-400 focus:bg-gray-200 text-base ${
+          errorMsg && "border-red-500"
+        }`}
+      >
+        <Text className="flex-1 text-base">{image}</Text>
         <View>
           {fetching ? (
             <ActivityIndicator color={colors.gray[600]} />
           ) : (
-            <TouchableOpacity onPress={pickImage} className="w-6 h-6">
-              <Calenlar fill={colors.gray[400]}/>
-            </TouchableOpacity>
+            <View className="flex flex-row space-x-1">
+              <TouchableOpacity
+                onPress={() => pickImage("gallery")}
+                className="w-6 h-6"
+              >
+                <GalleryIcon fill={colors.gray[400]} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => pickImage("camera")}
+                className="w-6 h-6"
+              >
+                <CameraIcon fill={colors.gray[400]} />
+              </TouchableOpacity>
+            </View>
           )}
-        </View>      
         </View>
+      </View>
     </View>
   );
 };

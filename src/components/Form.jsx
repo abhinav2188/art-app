@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
-import { Star } from "../svgIcons";
+import { Alert, Text, View } from "react-native";
 import ActionButton from "./button/ActionButton";
 import SubmitButton from "./button/SubmitButton";
-import CustomInput from "./CustomInput";
-import FormTitle from "./FormTitle";
+import CustomInput from "./input/CustomInput";
+
 
 const Form = ({
   fields,

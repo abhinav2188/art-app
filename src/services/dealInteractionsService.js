@@ -38,22 +38,3 @@ export async function getAllDealInteractions(dealId, pageNo) {
             return null;
         })
 }
-
-export async function deleteDealInteraction(interactionId) {
-    console.log("deleteDealInteraction()");
-    const path = "/ext/interactions/" + interactionId;
-    return instance.delete(path)
-        .then(
-            response => {
-                console.log("response data:", response.data);
-                return response.data;
-            }
-        )
-        .catch(error => {
-            console.log("error:", error);
-            console.log(error.response.data);
-            alert(error.response.data.status + ", " + error.response.data.responseMsg);
-            return null;
-        })
-}
-

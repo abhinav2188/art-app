@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { getAllDealConsultants } from "../../../services/consultantService";
 import ActionButton from "../../button/ActionButton";
 import GoBackButton from "../../button/GoBackButton";
@@ -46,7 +46,7 @@ const DealConsultants = ({ route, navigation, add, style }) => {
 
   useEffect(() => {
     loadData(pageNo);
-  }, [pageNo,dealId]);
+  }, [pageNo, dealId]);
 
   useEffect(() => {
     setPageNo(0);
@@ -56,7 +56,7 @@ const DealConsultants = ({ route, navigation, add, style }) => {
   function addConsultantToView(consultant) {
     setData((prevState) => ({
       ...prevState,
-      totalCount: prevState.totalCount+1,
+      totalCount: prevState.totalCount + 1,
       consultants: [consultant, ...prevState.consultants],
     }));
   }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Form from "../../../components/Form";
+import { requiredValidation } from "../../../inputValidations";
 import { getDropdownValues } from "../../../services/dropdownService";
 import { addDealQuery } from "../../../services/queryService";
 
@@ -14,21 +15,21 @@ const formFields = [
     {
         label: "Recipients",
         name: "recipients",
-        type: "dropdown",
+        type: "multi-dropdown",
         dropdownType: "DEAL_RECIPIENTS",
-        multiple: true
+        validateFunc:requiredValidation
     },
     {
         label: "Brochures",
         name: "brochures",
-        type: "dropdown",
+        type: "multi-dropdown",
         dropdownType: "BROCHURES_TYPE",
-        multiple: true
+        validateFunc:requiredValidation
     }
 ];
 
 
-const AddDealQuery = ({ dealId, setDisplay }) => {
+const AddDealQuery = ({ dealId, setDisplay, style }) => {
 
     const [formData, setFormData] = useState(initialData);
 
@@ -40,6 +41,10 @@ const AddDealQuery = ({ dealId, setDisplay }) => {
             values: []
         }
     });
+
+    const [errors, setErrors] = useState(initialData);
+
+    const [loading, setLoading] = useState(false);
 
     const [flag, setFlag] = useState(true);
 
@@ -55,15 +60,13 @@ const AddDealQuery = ({ dealId, setDisplay }) => {
         )
     }, [flag])
 
-    const [loading, setLoading] = useState(false);
 
     const handleSubmit = () => {
         setLoading(true);
         addDealQuery(dealId, formData).then(
             response => {
                 console.log("handlesubmit", response);
-                if (response) {
-                    // addInteractionToView(response.data);
+                if (!!response) {
                 }
                 setFormData(initialData);
                 setDisplay(false);
@@ -82,6 +85,10 @@ const AddDealQuery = ({ dealId, setDisplay }) => {
             onSubmit={handleSubmit}
             loading={loading}
             reloadDropdown={reloadDropdown}
+            errors={errors}
+            setErrors={setErrors}
+            buttonTitle="send query"
+            style={style}
         />
     );
 

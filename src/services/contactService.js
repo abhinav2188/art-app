@@ -39,24 +39,6 @@ export async function getAllDealContacts(dealId, pageNo) {
         })
 }
 
-export async function deleteDealContact(contactId) {
-    console.log("deleteDealContact()");
-    const path = "/ext/contacts/" + contactId;
-    return instance.delete(path)
-        .then(
-            response => {
-                console.log("response data:", response.data);
-                return response.data;
-            }
-        )
-        .catch(error => {
-            console.log("error:", error);
-            console.log(error.response.data);
-            alert(error.response.data.status + ", " + error.response.data.responseMsg);
-            return null;
-        })
-}
-
 export async function getAllContacts(pageNo) {
     console.log("getAllConatacts()");
     const path = "/int/contacts";

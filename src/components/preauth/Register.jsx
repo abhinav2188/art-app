@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import SubmitButton2 from "../components/button/SubmitButton2";
-import Form from "../components/Form";
+import SubmitButton2 from "../button/SubmitButton2";
+import Form from "../Form";
 import {
   mobileValidation,
   passwordValidation,
   primaryEmailValidation,
   requiredValidation,
-} from "../inputValidations";
-import { registerUser } from "../services/authService";
+} from "../../inputValidations";
+import { registerUser } from "../../services/authService";
 
 const initialState = {
   email: "",

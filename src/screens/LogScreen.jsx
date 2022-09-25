@@ -1,45 +1,47 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Image, Modal, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Image, View } from "react-native";
 import BottomModal from "../components/BottomModal";
-import Login from "./Login";
-import Register from "./Register";
-import logo from "../../assets/icon.png"
-import UserContext from "../context/UserContext";
-import { localStorage } from "../localStorage";
+import Login from "../components/preauth/Login";
+import logo from "../../assets/logo.png";
+import { StatusBar } from "expo-status-bar";
+import Register from "../components/preauth/Register";
 
-function LogScreen({navigation}) {
-  
-  const userContext = useContext(UserContext);
-
-  useEffect(()=>{
-    console.log("context change ",userContext.user);
-    if(!!userContext.user){
-      navigation.navigate("home");
-    }
-  },[userContext.user])
-
-const [viewLogin, setViewLogin] = useState(true);
+function LogScreen({ navigation }) {
+  const [viewLogin, setViewLogin] = useState(true);
   const [viewRegister, setViewRegister] = useState(false);
 
-  function toggleRegister(){
+  function toggleRegister() {
     setViewLogin(false);
     setViewRegister(true);
   }
 
-  function toggleLogin(){
-    setViewRegister(false);    
+  function toggleLogin() {
+    setViewRegister(false);
     setViewLogin(true);
   }
 
   return (
-    <View className="flex-1 flex bg-white">
-      <Image source={logo} className="w-24 h-24 self-center rounded-lg mt-12 shadow"/>
+ <View className="flex-1 flex bg-blue-art rounded-t-2xl" >
+    <StatusBar style="auto" />
+      <Image
+        source={logo}
+        className="h-24 w-24 self-center rounded-lg mt-24 shadow"
+        resizeMode="contain"
+      />
       <View>
-        <BottomModal modalVisible={viewLogin} setModalVisible={setViewLogin} closeable={false}>
-          <Login toggleRegister={toggleRegister}/>
+        <BottomModal
+          modalVisible={viewLogin}
+          setModalVisible={setViewLogin}
+          closeable={false}
+        >
+          <Login toggleRegister={toggleRegister} />
         </BottomModal>
-        <BottomModal modalVisible={viewRegister} setModalVisible={setViewRegister} closeable={false}>
-          <Register toggleLogin={toggleLogin}/>
+        <BottomModal
+          modalVisible={viewRegister}
+          setModalVisible={setViewRegister}
+          closeable={false}
+        >
+          <Register toggleLogin={toggleLogin} />
         </BottomModal>
       </View>
     </View>

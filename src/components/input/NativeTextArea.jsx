@@ -26,7 +26,7 @@ const NativeTextArea = ({
         <InputInfo description={description} errorMsg={errorMsg} />
       </View>
       <TextInput
-        className={`border border-gray-400 rounded-lg px-1 py-2 focus:border-gray-400 focus:bg-gray-200 text-base ${
+        className={`border border-gray-400 rounded-lg px-2 py-2 focus:border-gray-400 focus:bg-gray-200 text-base ${
           errorMsg && "border-red-500"
         }`}
         onChangeText={onChangeHandler}

@@ -18,9 +18,9 @@ const ActionButton = (props) => {
       onPress={props.onClick}
       style={props.style}
     >
-      <View className="h-8 w-8 p-1 bg-gray-200 rounded">
+      <View className="h-8 w-8 p-1 bg-gray-200 rounded flex justify-center items-center">
         {props.loading ? (
-          <ActivityIndicator color={colors.gray[600]} />
+          <ActivityIndicator color={colors.gray[600]}/>
         ) : !!props.type ? (
           buttons[props.type]
         ) : (

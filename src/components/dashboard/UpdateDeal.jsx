@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { getDeal } from "../../../services/dealService";
-import DealContacts from "../deal-contacts/DealContacts";
-import DealSection2 from "./DealSection2";
-import DealSection1 from "./DealSection1";
-import DealSection3 from "./DealSection3";
-import DealSection4 from "./DealSection4";
-import DealOwners from "./DealOwners";
-import DealConsultants from "../deal-consultants/DealConsultants";
-import DealInteractions from "../deal-interactions/DealInteractions";
-import DealQuery from "../dealQuery/DealQuery";
-import DealAttachments from "../deal-attachment/DealAttachments";
-import ActionButton from "../../../components/button/ActionButton";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import NativeTextInput from "../../input/NativeTextInput";
-import { LeftArrow, Meeting, User } from "../../../svgIcons";
-import colors from "tailwindcss/colors";
-import FormTitle from "../../FormTitle";
-import MenuButton from "../MenuButton";
+import DealQuery from "./dealQuery/DealQuery";
+import DealAttachments from "./deal-attachment/DealAttachments";
+import ActionButton from "../../components/button/ActionButton";
+import { ScrollView, Text, View } from "react-native";
+import NativeTextInput from "../input/NativeTextInput";
+import { Attachment, Meeting, User } from "../../svgIcons";
+import { getDeal } from "../../services/dealService";
+import GoBackButton from "../button/GoBackButton";
+import MenuButton from "../button/MenuButton";
+import DealSection1 from "./deal-sections/DealSection1";
+import DealSection2 from "./deal-sections/DealSection2";
+import DealSection3 from "./deal-sections/DealSection3";
+import DealSection4 from "./deal-sections/DealSection4";
 
 const initialData = {
   cardDetails: {
@@ -43,6 +38,7 @@ const initialData = {
     cateredByVertical: "",
     paymentType: "",
     openingDate: "",
+    nfud: "",
     expectedCloseDate: "",
     actualCloseDate: "",
     expectedNumberOfDays: "",
@@ -69,15 +65,13 @@ const initialData = {
 };
 
 const UpdateDeal = ({ navigation, route }) => {
+  const [dealId, setDealId] = useState(route.params.dealId);
+
   const [dealDetails, setDealDetails] = useState(initialData);
 
-  let [flag, setFlag] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const ReloadDealButton = (
-    <ActionButton type="reload" onClick={() => setFlag((f) => !f)} />
-  );
-
-  const [dealId, setDealId] = useState(route.params.dealId);
+  const [flag, setFlag] = useState(true);
 
   useEffect(() => {
     setDealId(route.params.dealId);
@@ -86,24 +80,27 @@ const UpdateDeal = ({ navigation, route }) => {
   useEffect(() => {
     console.log(flag);
     if (!dealId) return;
+    setLoading(true);
     getDeal(dealId).then((response) => {
       if (response) {
         setDealDetails(response.data);
       }
+      setLoading(false);
     });
   }, [dealId, flag]);
+
+  const ReloadDealButton = (
+    <ActionButton
+      type="reload"
+      loading={loading}
+      onClick={() => setFlag((f) => !f)}
+    />
+  );
 
   return (
     <ScrollView className="flex">
       <View className="flex p-4 space-y-4">
-        <View>
-          <TouchableOpacity
-            className="w-8 h-8 bg-gray-400 rounded-full"
-            onPress={() => navigation.goBack()}
-          >
-            <LeftArrow fill={colors.sky[800]} />
-          </TouchableOpacity>
-        </View>
+        <GoBackButton navigation={navigation} />
         <NativeTextInput
           value={dealId}
           label="deal id"
@@ -114,11 +111,12 @@ const UpdateDeal = ({ navigation, route }) => {
         {dealId ? (
           <View className="flex flex-col space-y-4">
             <DealSection1
+              dealId={dealId}
               setDealDetails={setDealDetails}
               data={dealDetails.cardDetails}
               reloadDealButton={ReloadDealButton}
             />
-            {/* <DealQuery dealId={dealId} /> */}
+            <DealQuery dealId={dealId} />
             <DealSection2
               dealId={dealId}
               setDealDetails={setDealDetails}
@@ -158,14 +156,18 @@ const UpdateDeal = ({ navigation, route }) => {
               title1="Deal"
               title2="Interactions"
             />
-              <DealAttachments dealId={dealId} /> 
-            {/* 
-                        <DealOwners dealId={dealId} setDealDetails={setDealDetails} data={dealDetails.authorizationDetails} />
-                        */}
+            <MenuButton
+              onPress={() =>
+                navigation.jumpTo("dealAttachments", { dealId: dealId })
+              }
+              Icon={Attachment}
+              title1="Deal"
+              title2="Attachments"
+            />
           </View>
         ) : (
           <View className="flex flex-col">
-            <Text>Select a deal from view section</Text>
+            <Text>Select a deal from list</Text>
           </View>
         )}
       </View>

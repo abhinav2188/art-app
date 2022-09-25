@@ -58,7 +58,7 @@ const DealContacts = ({ route, navigation, add, style }) => {
   function addContactToView(contact) {
     setData((prevState) => ({
       ...prevState,
-      totalCount: prevState.totalCount+1,
+      totalCount: prevState.totalCount + 1,
       contacts: [contact, ...prevState.contacts],
     }));
   }

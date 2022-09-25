@@ -18,7 +18,7 @@ const formFields = [
     {
         label: "Sub-category Product",
         name: "subCategoryProduct",
-        type: "dropdown",
+        type: "multi-dropdown",
         dropdownType: "SUB_CATEGORY_PRODUCT"
     },
     {

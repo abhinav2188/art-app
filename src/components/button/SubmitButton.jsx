@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Spinner from "../Spinner";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import colors from "tailwindcss/colors";
 
