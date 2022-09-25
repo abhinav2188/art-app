@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
-import LogScreen from "./LogScreen";
+import LogScreen from "../screens/LogScreen";
 import HomeNavigator from "./HomeNaivgator";
 import UserContext from "../context/UserContext";
-import TransitionScreen from "./TransitionScreen";
+import TransitionScreen from "../screens/TransitionScreen";
 
 const Stack = createNativeStackNavigator();
 

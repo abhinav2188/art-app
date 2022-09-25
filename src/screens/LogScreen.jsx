@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Image, View } from "react-native";
 import BottomModal from "../components/BottomModal";
-import Login from "./Login";
-import Register from "./Register";
+import Login from "../components/preauth/Login";
 import logo from "../../assets/logo.png";
 import { StatusBar } from "expo-status-bar";
+import Register from "../components/preauth/Register";
 
 function LogScreen({ navigation }) {
   const [viewLogin, setViewLogin] = useState(true);

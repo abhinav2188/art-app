@@ -1,5 +1,5 @@
 import MyAppsProviders from "./src/MyAppProviders";
-import AppNavigator from "./src/screens/AppNavigator";
+import AppNavigator from "./src/navigators/AppNavigator";
 
 export default function App() {
   return (

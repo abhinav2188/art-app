@@ -10,7 +10,7 @@ const HomeNavBar = (props) => {
     const {navigation} = props;
 
   return (
-    <View className="flex flex-col px-4 mt-4 mb-2">
+    <View className="flex flex-col px-4 mt-2 mb-2">
       <View className="w-full flex flex-row px-4 py-3 bg-sky-800 justify-between items-center rounded-xl border border-gray-400">
         <View className="flex flex-row space-x-2">
         <TouchableOpacity

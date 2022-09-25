@@ -81,10 +81,9 @@ const MultipleSelectInput = ({
             displayKey="label"
             onSelectedItemsChange={handleSelectChange}
             selectedItems={selectedOptions}
-            selectText="Select Items"
+            selectText="Select Item.."
             hideSubmitButton={true}
             fixedHeight={true}
-            styleMainWrapper={{display:"flex",borderRadius:"10"}}
             //   searchInputPlaceholderText="Search Items..."
             //   onChangeInput={(text) => console.log(text)}
             //   tagRemoveIconColor={colors.red[400]}

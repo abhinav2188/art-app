@@ -1,10 +1,9 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import React, { useContext, useEffect } from "react";
-import UserContext from "../context/UserContext";
-import { DashboardScreen } from "./DashboardScreen";
-import { MyDealsScreen } from "./MyDealsScreen";
-import ProfileScreen from "./ProfileScreen";
-import HomeNavBar from "./HomeNavBar";
+import React from "react";
+import { DashboardNavigator } from "./DashboardNavigator";
+import { MyDealsNavigator } from "./MyDealsNavigator";
+import ProfileScreen from "../screens/ProfileScreen";
+import HomeNavBar from "../components/HomeNavBar";
 
 const HomeNavigator = ({ navigation }) => {
 
@@ -12,8 +11,8 @@ const HomeNavigator = ({ navigation }) => {
 
   return (
     <Tab.Navigator tabBar={HomeNavBar}>
-      <Tab.Screen name="dashboard" component={DashboardScreen} />
-      <Tab.Screen name="myDeals" component={MyDealsScreen} />
+      <Tab.Screen name="dashboard" component={DashboardNavigator} />
+      <Tab.Screen name="myDeals" component={MyDealsNavigator} />
       <Tab.Screen name="profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
