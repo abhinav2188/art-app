@@ -14,15 +14,26 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.abhinav2188.ARThermosets"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.abhinav2188.ARThermosets"
     },
     "web": {
       "favicon": "./assets/favicon.ico"
@@ -31,7 +42,8 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app requires photo permission"
+          "photosPermission": "The app requires photo permission",
+          "cameraPermission": "The app requires camera permission"
         }
       ]
     ]

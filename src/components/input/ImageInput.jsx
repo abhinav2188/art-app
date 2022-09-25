@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { CameraIcon, GalleryIcon } from "../../svgIcons";
@@ -22,6 +22,13 @@ const ImageInput = ({
     setFetching(true);
 
     // fetch image using camera or gallery
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+    
     let result = null;
     if (mode == "gallery") {
       result = await ImagePicker.launchImageLibraryAsync({
@@ -29,15 +36,24 @@ const ImageInput = ({
         allowsEditing: true,
       });
     } else {
-      let cameraPermission = await ImagePicker.requestCameraPermissionsAsync({
-        allowsEditing: true,
-      });
-      if (cameraPermission.granted === false) {
-        alert("Permission to access camera roll is required!");
-        setFetching(false);
-        return;
-      }
-      result = await ImagePicker.launchCameraAsync();
+        let cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
+        console.log(cameraPermission);
+        if (cameraPermission.granted === false) {
+          alert("Permission to access camera is required!");
+          setFetching(false);
+          return;
+        }
+        try{
+          result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true            
+          });
+        }catch{
+          error => console.error(error);
+        }
+        console.log(result);
+      // }catch{
+      //   error => console.error(error);
+      // };
     }
 
     // set image to formData, view
@@ -56,7 +72,7 @@ const ImageInput = ({
         <InputInfo description={description} errorMsg={errorMsg} />
       </View>
       <View
-        className={`flex flex-row items-center py-2 px-2 space-x-2 justify-between border border-gray-400 rounded-lg focus:border-gray-400 focus:bg-gray-200 text-base ${
+        className={`flex flex-row items-center py-3 px-2 space-x-2 justify-between border border-gray-400 rounded-lg focus:border-gray-400 focus:bg-gray-200 text-base ${
           errorMsg && "border-red-500"
         }`}
       >
