@@ -46,6 +46,11 @@
           "cameraPermission": "The app requires camera permission"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f48a2c33-2d15-4e86-a87e-3864b69bc4a6"
+      }
+    }
   }
 }
